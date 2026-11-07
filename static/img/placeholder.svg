@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#EFECE2" rx="12"/>
+  <circle cx="100" cy="85" r="32" fill="#D9D5C7"/>
+  <path d="M78 85 C 78 68, 90 55, 100 55 C 110 55, 122 68, 122 85 C 122 102, 110 115, 100 115 C 90 115, 78 102, 78 85 Z" fill="#2E7D32" opacity="0.6"/>
+  <path d="M100 85 L100 120" stroke="#8D5B2E" stroke-width="3" stroke-linecap="round"/>
+  <text x="100" y="155" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#6B6A63">KrishiSetu</text>
+</svg>
+
