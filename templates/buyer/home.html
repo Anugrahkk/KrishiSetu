@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buyer Marketplace | KrishiSetu</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/buyer" class="brand">
+        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">KrishiSetu</span>
+          <span class="brand-subtitle">Fresh Farm Direct 🛒</span>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="/buyer" class="active" data-i18n="home">Home</a>
+        <a href="/buyer/produce">Fresh Produce</a>
+        <a href="/buyer/cart" data-i18n="cart">Cart</a>
+        <a href="/buyer/orders" data-i18n="orders">Orders</a>
+      </nav>
+      <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
+        <a href="/buyer/cart" class="cart-icon-btn" title="View Cart">
+          <span>🛒</span>
+          <span class="cart-counter" style="display: none;">0</span>
+        </a>
+        <div id="header-user-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Hero Banner -->
+      <section style="background: linear-gradient(135deg, #FAF8F2 0%, #E8F5E9 100%); border: 1px solid var(--card-border); border-radius: 18px; padding: 32px 20px; text-align: center; margin-bottom: 28px;">
+        <span class="badge badge-govt" style="margin-bottom: 10px;">DIRECT FROM KERALA FARMERS</span>
+        <h1 style="font-size: 2rem; font-weight: 800; color: var(--dark-green); margin-bottom: 8px;">
+          Farm Fresh Harvests at Fair Prices
+        </h1>
+        <p style="font-size: 1rem; color: var(--text-muted); max-width: 580px; margin: 0 auto 20px;">
+          Zero middlemen markups. Freshly harvested fruits, vegetables, country eggs, and pure milk straight from local cultivators.
+        </p>
+        <div style="max-width: 500px; margin: 0 auto; display: flex; gap: 8px;">
+          <input type="text" id="buyer-home-search" class="form-control" placeholder="Search bananas, fresh milk, country eggs..." onkeydown="if(event.key==='Enter') window.location.href='/buyer/produce?q='+encodeURIComponent(this.value)">
+          <button class="btn btn-primary" onclick="window.location.href='/buyer/produce?q='+encodeURIComponent(document.getElementById('buyer-home-search').value)">
+            <span>Search</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Category Tiles -->
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 14px;">
+        🌾 Harvest Categories
+      </h2>
+      <div class="tiles-grid" style="margin-bottom: 32px;">
+        <a href="/buyer/produce?category=vegetable" class="action-tile">
+          <div class="action-tile-icon">🥬</div>
+          <div class="action-tile-title">Vegetables</div>
+          <div class="action-tile-desc">Chillies, gourds & beans</div>
+        </a>
+        <a href="/buyer/produce?category=fruit" class="action-tile">
+          <div class="action-tile-icon">🍌</div>
+          <div class="action-tile-title">Fruits</div>
+          <div class="action-tile-desc">Nendran bananas, mangoes</div>
+        </a>
+        <a href="/buyer/produce?category=egg" class="action-tile">
+          <div class="action-tile-icon">🥚</div>
+          <div class="action-tile-title">Country Eggs</div>
+          <div class="action-tile-desc">Free-range farm eggs</div>
+        </a>
+        <a href="/buyer/produce?category=milk" class="action-tile">
+          <div class="action-tile-icon">🥛</div>
+          <div class="action-tile-title">Fresh Milk</div>
+          <div class="action-tile-desc">Pure morning cow milk</div>
+        </a>
+      </div>
+
+      <!-- Fresh Near You Highlight -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-dark);">
+          🌱 Fresh Near You in Kerala
+        </h2>
+        <a href="/buyer/produce" style="font-weight: 600; font-size: 0.95rem;">View All Harvests →</a>
+      </div>
+
+      <div id="produce-grid" class="product-grid" style="margin-bottom: 36px;"></div>
+
+      <!-- Why Buy Direct Info Cards -->
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 14px;">
+        ✨ Why Buy Direct on KrishiSetu?
+      </h2>
+      <div class="info-card-grid">
+        <div class="info-card">
+          <span class="info-card-label">NO MIDDLEMEN</span>
+          <span class="info-card-value">100% to Farmer</span>
+        </div>
+        <div class="info-card">
+          <span class="info-card-label">PRICE STANDARD</span>
+          <span class="info-card-value">Fair Benchmark</span>
+        </div>
+        <div class="info-card">
+          <span class="info-card-label">FRESHNESS</span>
+          <span class="info-card-value">Same-Day Harvest</span>
+        </div>
+        <div class="info-card">
+          <span class="info-card-label">PAYMENT</span>
+          <span class="info-card-value">Pay on Delivery</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation (4 icons for Buyer) -->
+  <nav class="bottom-nav">
+    <a href="/buyer" class="bottom-nav-item active">
+      <span class="nav-icon">🏠</span>
+      <span data-i18n="home">Home</span>
+    </a>
+    <a href="/buyer/produce" class="bottom-nav-item">
+      <span class="nav-icon">🌾</span>
+      <span>Browse</span>
+    </a>
+    <a href="/buyer/cart" class="bottom-nav-item">
+      <span class="nav-icon">🛒</span>
+      <span data-i18n="cart">Cart</span>
+    </a>
+    <a href="/buyer/orders" class="bottom-nav-item">
+      <span class="nav-icon">📦</span>
+      <span data-i18n="orders">Orders</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/cart.js"></script>
+  <script src="/static/js/buyer.js"></script>
+</body>
+</html>
+

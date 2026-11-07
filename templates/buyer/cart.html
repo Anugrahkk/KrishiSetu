@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buyer Cart & Checkout | KrishiSetu</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/buyer" class="brand">
+        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">KrishiSetu</span>
+          <span class="brand-subtitle">Produce Cart 🛒</span>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="/buyer" data-i18n="home">Home</a>
+        <a href="/buyer/produce">Fresh Produce</a>
+        <a href="/buyer/cart" class="active" data-i18n="cart">Cart</a>
+        <a href="/buyer/orders" data-i18n="orders">Orders</a>
+      </nav>
+      <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
+        <div id="header-user-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+
+      <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 20px;">
+        🛒 Fresh Produce Cart & Checkout
+      </h1>
+
+      <!-- Cart Empty View -->
+      <div id="cart-empty-view" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">🛒</div>
+        <h2 class="empty-state-title">Your produce cart is empty</h2>
+        <p class="empty-state-desc">You haven't selected any fresh farm fruits, vegetables, or eggs yet.</p>
+        <a href="/buyer/produce" class="btn btn-primary">
+          <span>Explore Fresh Produce →</span>
+        </a>
+      </div>
+
+      <!-- Cart Layout -->
+      <div class="cart-layout">
+        <!-- Item List -->
+        <div class="surface-card">
+          <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">Selected Farm Produce</h2>
+          <div id="cart-items-container"></div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 2px dashed var(--card-border);">
+            <span style="font-size: 1.1rem; font-weight: 700;">Subtotal:</span>
+            <span id="cart-subtotal" style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: var(--dark-green);">₹0.00</span>
+          </div>
+        </div>
+
+        <!-- Checkout Form Card -->
+        <div id="cart-checkout-card" class="surface-card">
+          <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">Delivery Details</h2>
+          <form id="checkout-form">
+            <div class="form-group">
+              <label class="form-label" for="checkout-name">Buyer / Contact Name</label>
+              <input type="text" id="checkout-name" class="form-control" placeholder="Full Name" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="checkout-phone">Phone Number</label>
+              <input type="tel" id="checkout-phone" class="form-control" placeholder="10-digit mobile number" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="checkout-address">Delivery Address</label>
+              <textarea id="checkout-address" class="form-control" rows="3" placeholder="House/Flat number, Street, City, Landmark" required></textarea>
+            </div>
+
+            <div style="background: var(--light-green); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.85rem; color: var(--dark-green);">
+              💵 <strong>Payment Method:</strong> Cash on Delivery. Pay only when you receive your farm-fresh harvest.
+            </div>
+
+            <button type="submit" id="place-order-btn" class="btn btn-primary btn-block">
+              <span>Place Order (Pay on Delivery)</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Order Success Modal -->
+  <div id="order-success-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal-dialog" style="text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark-green); margin-bottom: 8px;">Order Placed Successfully!</h2>
+      <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 16px;">
+        Thank you for supporting Kerala's local farmers! The farmer has received your order request.
+      </p>
+
+      <div class="info-card" style="margin-bottom: 20px;">
+        <span class="info-card-label">ORDER ID</span>
+        <span id="confirmed-order-id" class="info-card-value">#123</span>
+        <div style="margin-top: 8px; font-size: 0.9rem; color: var(--text-dark);">
+          Total payable on delivery: <strong id="confirmed-order-total" style="color: var(--dark-green);">₹0.00</strong>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <a href="/buyer/orders" class="btn btn-primary">
+          <span>View My Orders →</span>
+        </a>
+        <a href="/buyer" class="btn btn-outline">
+          <span>Continue Shopping</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="/buyer" class="bottom-nav-item">
+      <span class="nav-icon">🏠</span>
+      <span data-i18n="home">Home</span>
+    </a>
+    <a href="/buyer/produce" class="bottom-nav-item">
+      <span class="nav-icon">🌾</span>
+      <span>Browse</span>
+    </a>
+    <a href="/buyer/cart" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
+      <span class="nav-icon">🛒</span>
+      <span data-i18n="cart">Cart</span>
+    </a>
+    <a href="/buyer/orders" class="bottom-nav-item">
+      <span class="nav-icon">📦</span>
+      <span data-i18n="orders">Orders</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/cart.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (currentUser) {
+        const nameField = document.getElementById("checkout-name");
+        const phoneField = document.getElementById("checkout-phone");
+        if (nameField && currentUser.name) nameField.value = currentUser.name;
+        if (phoneField && currentUser.phone) phoneField.value = currentUser.phone;
+      }
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harvest Details | KrishiSetu</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/buyer" class="brand">
+        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">KrishiSetu</span>
+          <span class="brand-subtitle">Produce Detail 🌾</span>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="/buyer" data-i18n="home">Home</a>
+        <a href="/buyer/produce">Fresh Produce</a>
+        <a href="/buyer/cart" data-i18n="cart">Cart</a>
+        <a href="/buyer/orders" data-i18n="orders">Orders</a>
+      </nav>
+      <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
+        <a href="/buyer/cart" class="cart-icon-btn" title="View Cart">
+          <span>🛒</span>
+          <span class="cart-counter" style="display: none;">0</span>
+        </a>
+        <div id="header-user-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container" style="max-width: 800px;">
+
+      <a href="/buyer/produce" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; margin-bottom: 16px;">
+        ← Back to all produce
+      </a>
+
+      <div class="surface-card" style="padding: 24px;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+          <!-- Product Image -->
+          <div style="max-height: 320px; border-radius: 14px; overflow: hidden; background: #EFECE2; display: flex; align-items: center; justify-content: center;">
+            <img id="detail-img" src="/static/img/placeholder.svg" alt="Produce" style="width: 100%; max-height: 320px; object-fit: cover;">
+          </div>
+
+          <!-- Product Info -->
+          <div>
+            <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+              <span id="detail-category" class="badge badge-govt">PRODUCE</span>
+              <span id="detail-fair-badge" class="badge badge-fair-price">✓ FAIR PRICE VERIFIED</span>
+            </div>
+
+            <h1 id="detail-title" style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px;">
+              Farm Fresh Produce
+            </h1>
+
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px;">
+              <span id="detail-price" style="font-family: var(--font-mono); font-size: 2rem; font-weight: 800; color: var(--dark-green);">₹0</span>
+              <span id="detail-unit" style="font-size: 1rem; color: var(--text-muted);">/ unit</span>
+            </div>
+
+            <!-- Farmer Card -->
+            <div class="info-card" style="margin-bottom: 20px;">
+              <span class="info-card-label">PRODUCER / FARMER</span>
+              <span id="detail-farmer-name" class="info-card-value">Direct Kerala Farmer</span>
+              <div id="detail-farmer-place" style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">📍 Ernakulam, Kerala</div>
+            </div>
+
+            <p id="detail-desc" style="font-size: 0.95rem; color: var(--text-dark); line-height: 1.6; margin-bottom: 24px;">
+              Fresh farm produce harvested naturally without excessive chemical pesticides. Directly sourced to support local farming livelihoods.
+            </p>
+
+            <!-- Quantity & Add to Cart Action -->
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+              <div class="stepper" style="height: 48px;">
+                <button class="stepper-btn" style="width: 44px; height: 48px;" onclick="adjustDetailQty(-1)">−</button>
+                <span id="detail-qty" class="stepper-val" style="width: 44px; font-size: 1.1rem;">1</span>
+                <button class="stepper-btn" style="width: 44px; height: 48px;" onclick="adjustDetailQty(1)">+</button>
+              </div>
+
+              <button id="detail-add-btn" class="btn btn-primary" style="flex: 1; min-width: 200px;">
+                <span>🛒 Add to Cart</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="/buyer" class="bottom-nav-item">
+      <span class="nav-icon">🏠</span>
+      <span data-i18n="home">Home</span>
+    </a>
+    <a href="/buyer/produce" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
+      <span class="nav-icon">🌾</span>
+      <span>Browse</span>
+    </a>
+    <a href="/buyer/cart" class="bottom-nav-item">
+      <span class="nav-icon">🛒</span>
+      <span data-i18n="cart">Cart</span>
+    </a>
+    <a href="/buyer/orders" class="bottom-nav-item">
+      <span class="nav-icon">📦</span>
+      <span data-i18n="orders">Orders</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/cart.js"></script>
+  <script>
+    let currentQty = 1;
+    let currentProduct = null;
+
+    function adjustDetailQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      document.getElementById('detail-qty').textContent = currentQty;
+    }
+
+    async function loadProductDetails() {
+      const parts = window.location.pathname.split('/');
+      const id = parts[parts.length - 1] || '1';
+
+      try {
+        const res = await fetch(`/api/produce/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          currentProduct = data.produce;
+        }
+      } catch (_) {}
+
+      if (!currentProduct) {
+        currentProduct = {
+          id: parseInt(id) || 1,
+          name: "Organic Nendran Bananas",
+          category: "fruit",
+          price: 52,
+          unit: "kg",
+          quantity: 80,
+          district: "Ernakulam",
+          village: "Aluva",
+          farmer_name: "Rajan Pillai",
+          description: "Naturally ripened traditional Kerala Nendran bananas directly from farm."
+        };
+      }
+
+      document.getElementById('detail-title').textContent = currentProduct.name;
+      document.getElementById('detail-category').textContent = (currentProduct.category || "PRODUCE").toUpperCase();
+      document.getElementById('detail-price').textContent = `₹${parseFloat(currentProduct.price).toFixed(0)}`;
+      document.getElementById('detail-unit').textContent = `/ ${currentProduct.unit}`;
+      document.getElementById('detail-farmer-name').textContent = currentProduct.farmer_name || "Direct Farmer";
+      document.getElementById('detail-farmer-place').textContent = `📍 ${currentProduct.village ? currentProduct.village + ', ' : ''}${currentProduct.district || 'Kerala'}`;
+      document.getElementById('detail-desc').textContent = currentProduct.description || "Freshly harvested produce directly available for home or commercial delivery.";
+      if (currentProduct.image) document.getElementById('detail-img').src = currentProduct.image;
+
+      document.getElementById('detail-add-btn').onclick = () => {
+        addItemToCart({
+          id: currentProduct.id,
+          name: currentProduct.name,
+          price: currentProduct.price,
+          unit: currentProduct.unit,
+          type: 'produce',
+          sellerName: currentProduct.farmer_name || "Direct Farmer",
+          quantity: currentQty
+        });
+      };
+    }
+
+    document.addEventListener("DOMContentLoaded", loadProductDetails);
+  </script>
+</body>
+</html>
+

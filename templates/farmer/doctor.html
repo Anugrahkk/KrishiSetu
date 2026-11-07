@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Doctor (OpenCV Engine) | KrishiSetu</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/farmer" class="brand">
+        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">KrishiSetu</span>
+          <span class="brand-subtitle">Crop Doctor 🩺</span>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="/farmer" data-i18n="home">Home</a>
+        <a href="/farmer/inputs" data-i18n="buyInputs">Buy Inputs</a>
+        <a href="/farmer/doctor" class="active" data-i18n="cropDoctor">Crop Doctor</a>
+        <a href="/farmer/sell" data-i18n="sellProduce">Sell</a>
+        <a href="/farmer/vets" data-i18n="findVet">Vets</a>
+        <a href="/farmer/orders" data-i18n="orders">Orders</a>
+      </nav>
+      <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
+        <a href="/farmer/cart" class="cart-icon-btn" title="View Cart">
+          <span>🛒</span>
+          <span class="cart-counter" style="display: none;">0</span>
+        </a>
+        <div id="header-user-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container doctor-container">
+
+      <!-- Hero Header -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 6px;">
+          🩺 Crop Doctor: Instant Leaf Disease Screening
+        </h1>
+        <p style="font-size: 0.95rem; color: var(--text-muted);">
+          Powered by offline-first OpenCV HSV segmentation and contour spot analysis.
+        </p>
+      </div>
+
+      <!-- Upload Dropzone (Camera / Gallery) -->
+      <div class="upload-dropzone" id="upload-dropzone">
+        <input type="file" id="leaf-file-input" class="file-input-hidden" accept="image/*" capture="environment">
+        <div class="upload-icon">📷</div>
+        <h2 class="upload-title">Tap to take or upload a leaf photo</h2>
+        <p class="upload-subtitle">Supports camera capture on phone or JPG/PNG upload up to 5 MB</p>
+        <button type="button" class="btn btn-primary btn-sm">
+          <span>📁 Browse / Open Camera</span>
+        </button>
+      </div>
+
+      <!-- Best Practice Tips Strip -->
+      <div class="tips-strip">
+        <span class="tip-item">☀️ <strong>Daylight:</strong> Natural bright light</span>
+        <span class="tip-item">🍃 <strong>One Leaf:</strong> Center a single leaf</span>
+        <span class="tip-item">⚪ <strong>Plain BG:</strong> Paper or flat ground</span>
+        <span class="tip-item">🔍 <strong>Close-up:</strong> Fill frame, no blur</span>
+      </div>
+
+      <!-- Try Sample Image Row (Hackathon Safe Fallback) -->
+      <div class="samples-wrapper">
+        <span class="samples-label">⚡ Try a test sample image (Instant demo):</span>
+        <div class="samples-grid">
+          <button type="button" class="sample-btn" data-sample-id="1">
+            <img src="/static/img/sample-healthy.svg" alt="Healthy Sample" class="sample-thumb">
+            <span class="sample-btn-text">Sample 1: Healthy</span>
+          </button>
+
+          <button type="button" class="sample-btn" data-sample-id="2">
+            <img src="/static/img/sample-spotted.svg" alt="Spotted Sample" class="sample-thumb">
+            <span class="sample-btn-text">Sample 2: Leaf Spot</span>
+          </button>
+
+          <button type="button" class="sample-btn" data-sample-id="3">
+            <img src="/static/img/sample-yellowing.svg" alt="Yellowing Sample" class="sample-thumb">
+            <span class="sample-btn-text">Sample 3: Yellowing</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Selected Image & Action -->
+      <div id="preview-container" class="surface-card" style="display: none; text-align: center;">
+        <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px;">Selected Leaf Photo:</h3>
+        <img id="preview-img" src="" alt="Selected leaf" style="max-height: 260px; margin: 0 auto 16px; border-radius: 10px; border: 1px solid var(--card-border);">
+        <div>
+          <button id="analyze-btn" class="btn btn-primary" type="button" style="min-width: 200px;">
+            <span>🔬 Analyse with OpenCV</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Animated Scanning State -->
+      <div id="scanning-card" class="scanning-card" style="display: none;">
+        <div class="scan-laser-line"></div>
+        <div class="spinner"></div>
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--dark-green); margin-bottom: 6px;">
+          Analyzing Leaf Pigmentation...
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-mono);">
+          [OpenCV] Converting BGR to HSV • Extracting necrotic lesion contours • Calculating damage ratio
+        </p>
+      </div>
+
+      <!-- Scan Result Card -->
+      <div id="result-card" class="result-card" style="display: none;">
+        <div class="result-header">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+              Diagnosis Result
+            </div>
+            <h2 id="result-condition" class="result-condition">Condition Identified</h2>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <span id="confidence-badge" class="badge badge-govt">High Confidence</span>
+            <span id="severity-badge" class="badge badge-moderate">Moderate</span>
+          </div>
+        </div>
+
+        <!-- Severity Meter Bar -->
+        <div class="severity-meter-wrapper">
+          <div class="severity-meter-label">
+            <span>Leaf Damage Severity</span>
+            <span id="severity-pct-label" style="font-family: var(--font-mono);">18.4%</span>
+          </div>
+          <div class="severity-meter-bar">
+            <div id="severity-meter-fill" class="severity-fill severity-moderate" style="width: 18.4%;"></div>
+          </div>
+        </div>
+
+        <!-- Annotated Image with OpenCV Contours -->
+        <div class="annotated-img-wrapper">
+          <img id="annotated-image" src="" alt="OpenCV Annotated Leaf" class="annotated-img">
+        </div>
+
+        <!-- Three Info Cards -->
+        <div class="info-card-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 20px;">
+          <div class="info-card">
+            <span class="info-card-label">AFFECTED %</span>
+            <span id="stat-affected-pct" class="info-card-value">18.4%</span>
+          </div>
+          <div class="info-card">
+            <span class="info-card-label">SPOTS FOUND</span>
+            <span id="stat-spots-found" class="info-card-value">9</span>
+          </div>
+          <div class="info-card">
+            <span class="info-card-label">SEVERITY</span>
+            <span id="stat-severity-val" class="info-card-value">Moderate</span>
+          </div>
+        </div>
+
+        <!-- Practical Agricultural Advice Checklist -->
+        <div class="advice-box">
+          <div class="advice-box-title">
+            <span>🌱</span> Recommended Treatment & Action Steps:
+          </div>
+          <ul id="advice-checklist" class="advice-list">
+            <li>Prune and safely discard heavily spotted foliage.</li>
+            <li>Irrigate directly at the root soil; avoid wetting leaves.</li>
+            <li>Consult Krishibhavan for biological bio-fungicide options.</li>
+          </ul>
+        </div>
+
+        <!-- Disclaimer -->
+        <p id="result-disclaimer" class="disclaimer-text">
+          ⚠️ Disclaimer: Preliminary heuristic screening based on leaf colour and spot geometry. Confirm with your local Krishibhavan Agricultural Officer.
+        </p>
+
+        <!-- Connected Next Steps -->
+        <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+          <a href="/farmer/inputs" class="btn btn-primary btn-block">
+            <span>🌱 Find Treatment Products in Buy Inputs</span>
+          </a>
+          <a href="/farmer/vets" class="btn btn-secondary btn-block">
+            <span>📞 Talk to an Agricultural / Vet Expert</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Retry State (Friendly Tips, Never Crash) -->
+      <div id="retry-card" class="retry-card" style="display: none;">
+        <div class="retry-icon">📷</div>
+        <h3 class="retry-title">We need a clearer leaf view</h3>
+        <p id="retry-message" class="retry-msg">
+          The photo is either too dark, blurry, or lacks clear leaf contrast.
+        </p>
+        <div style="background: rgba(255, 255, 255, 0.7); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.88rem; text-align: left;">
+          <strong>Quick tips for best result:</strong>
+          <ul style="padding-left: 20px; margin-top: 6px;">
+            <li>Step outside into daylight (avoid camera flash reflections).</li>
+            <li>Place a single leaf flat on a white piece of paper.</li>
+            <li>Hold the camera steady 15–20 cm away and focus.</li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('leaf-file-input').click()">
+          <span>🔄 Retake Leaf Photo</span>
+        </button>
+      </div>
+
+      <!-- Recent Scans Section -->
+      <div style="margin-top: 36px;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">
+          📋 Previous Leaf Scans
+        </h3>
+        <div id="scan-history-list"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation (5 icons) -->
+  <nav class="bottom-nav">
+    <a href="/farmer" class="bottom-nav-item">
+      <span class="nav-icon">🏠</span>
+      <span data-i18n="home">Home</span>
+    </a>
+    <a href="/farmer/inputs" class="bottom-nav-item">
+      <span class="nav-icon">🌱</span>
+      <span data-i18n="buyInputs">Inputs</span>
+    </a>
+    <a href="/farmer/doctor" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
+      <span class="nav-icon">🩺</span>
+      <span data-i18n="cropDoctor">Doctor</span>
+    </a>
+    <a href="/farmer/sell" class="bottom-nav-item">
+      <span class="nav-icon">🌾</span>
+      <span data-i18n="sellProduce">Sell</span>
+    </a>
+    <a href="/farmer/vets" class="bottom-nav-item">
+      <span class="nav-icon">📞</span>
+      <span data-i18n="findVet">Vets</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="/static/js/common.js"></script>
+  <script src="/static/js/cart.js"></script>
+  <script src="/static/js/scan.js"></script>
+</body>
+</html>
+
