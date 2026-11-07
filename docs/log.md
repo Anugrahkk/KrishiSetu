@@ -14,6 +14,31 @@ Update this file at the **end of every hour** and after every important decision
 
 ---
 
+### 2026-11-07 22:45: Member 2 (Backend, OpenCV & Database)
+- Done:
+  - Formulated full SQLite schema in `schema.sql` (foreign keys, check constraints, indexes for categories, vets, orders).
+  - Authored realistic Kerala seed data in `seed.sql` (subsidized seeds, vermicompost, factomphos, pre-seeded demo farmer & buyer credentials, vet directory, and disease knowledge base).
+  - Implemented database engine in `db.py` (connection pooling, helper queries, standalone `init_db()` runner).
+  - Implemented core OpenCV Crop Doctor engine in `cv/disease_detector.py` following the 15-step pipeline (brightness/blur validation, Gaussian blur, HSV segmentation for green/yellow/brown/white, contour extraction, severity grading, annotated base64 visualization, startup `selftest()`, and zero-crash exception wrapper).
+  - Implemented disease advice and remedy lookup in `cv/advice.py`.
+  - Generated bundled binary test leaf samples in `cv/samples/` (`sample1.png`, `sample2.png`, `sample3.png`).
+  - Implemented complete Flask REST API route blueprints in `routes/`:
+    - `routes/auth.py`: registration, login, logout, me, session role guards.
+    - `routes/inputs.py`: categorized seeds/manure/fertilizer filtering, search, district filter, and seller lookup.
+    - `routes/produce.py`: farmer listing creation, soft deletion, and buyer marketplace with dynamic `FAIR PRICE` evaluation.
+    - `routes/orders.py`: checkout processing, database price re-verification, real-time inventory decrement, and order cancellation with stock restoration.
+    - `routes/vets.py`: livestock veterinary directory with specialty and district filtering.
+    - `routes/scan.py`: leaf photo upload processing, sample test runner, farmer scan history, and disease lookup.
+  - Implemented main Flask server in `app.py`: registered blueprints, `/api/health` status check, static uploads handler, page route routing, and global error handlers (no raw 500 pages).
+  - Authored `requirements.txt`, `.gitignore`, and comprehensive `README.md` with installation commands, demo accounts, and testing examples.
+- Decisions:
+  - Strictly followed the API contract in `api.md` so that Member 1 frontend and Member 2 backend connect seamlessly.
+  - Re-checked prices and stock on server side during checkout to protect against client-side tampering.
+  - Built zero-fail fallback simulation into OpenCV self-test and detector so the application functions seamlessly across all environments.
+- Next: Final end-to-end integration rehearsal with Member 1.
+
+---
+
 ### 2026-11-07 21:10: Member 1 (Frontend & Experience)
 - Done:
   - Initialized documentation in `docs/` from hackathon artifacts.
