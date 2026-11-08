@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register | KrishiSetu</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+  <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="static/img/logo.svg">
 </head>
 <body>
 
   <!-- Site Header -->
   <header class="site-header">
     <div class="container">
-      <a href="/" class="brand">
-        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+      <a href="index.html" class="brand">
+        <img src="static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-title">KrishiSetu</span>
           <span class="brand-subtitle">Registration</span>
@@ -92,13 +92,13 @@
         </form>
 
         <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">
-          Already registered? <a href="/login" style="font-weight: 600;">Sign in here</a>
+          Already registered? <a href="login.html" style="font-weight: 600;">Sign in here</a>
         </div>
       </div>
     </div>
   </main>
 
-  <script src="/static/js/common.js"></script>
+  <script src="static/js/common.js"></script>
   <script>
     document.getElementById('register-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -127,18 +127,18 @@
           localStorage.setItem('krishi_user', JSON.stringify(data.user));
           showToast(`Welcome to KrishiSetu, ${data.user.name}!`, 'success');
           setTimeout(() => {
-            window.location.href = data.user.role === 'buyer' ? '/buyer' : '/farmer';
+            window.location.href = data.user.role === 'buyer' ? 'templates/buyer/home.html' : 'templates/farmer/dashboard.html';
           }, 500);
         } else {
           // Fallback simulation for hackathon demo
           localStorage.setItem('krishi_user', JSON.stringify({ name, phone, role, district, village }));
           showToast('Account created! Welcome to KrishiSetu.', 'success');
-          setTimeout(() => { window.location.href = role === 'buyer' ? '/buyer' : '/farmer'; }, 800);
+          setTimeout(() => { window.location.href = role === 'buyer' ? 'templates/buyer/home.html' : 'templates/farmer/dashboard.html'; }, 800);
         }
       } catch (err) {
         localStorage.setItem('krishi_user', JSON.stringify({ name, phone, role, district, village }));
         showToast('Account created! Welcome to KrishiSetu.', 'success');
-        setTimeout(() => { window.location.href = role === 'buyer' ? '/buyer' : '/farmer'; }, 800);
+        setTimeout(() => { window.location.href = role === 'buyer' ? 'templates/buyer/home.html' : 'templates/farmer/dashboard.html'; }, 800);
       } finally {
         btn.disabled = false;
         btn.textContent = "Complete Registration →";

@@ -254,16 +254,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (treatmentBtn) {
       const code = data.condition_code || "";
       if (code === "leaf_spot") {
-        treatmentBtn.href = "/farmer/inputs?category=manure&q=neem";
+        treatmentBtn.href = "inputs.html?category=manure&q=neem";
         treatmentBtn.innerHTML = "<span>🌱 Find Neem & Bio-Fungicide Inputs →</span>";
       } else if (code === "yellowing") {
-        treatmentBtn.href = "/farmer/inputs?category=manure&q=vermicompost";
+        treatmentBtn.href = "inputs.html?category=manure&q=vermicompost";
         treatmentBtn.innerHTML = "<span>🌱 Find Vermicompost & Micronutrients →</span>";
       } else if (code === "powdery") {
-        treatmentBtn.href = "/farmer/inputs?q=bio";
+        treatmentBtn.href = "inputs.html?q=bio";
         treatmentBtn.innerHTML = "<span>🌱 Find Bio-Control Treatments →</span>";
       } else {
-        treatmentBtn.href = "/farmer/inputs";
+        treatmentBtn.href = "inputs.html";
         treatmentBtn.innerHTML = "<span>🌱 Explore Agri-Inputs & Fertilizers →</span>";
       }
     }

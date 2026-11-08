@@ -70,7 +70,7 @@ async function loadBuyerProduce() {
 
     return `
       <div class="product-card">
-        <a href="/buyer/product/${item.id}" class="product-card-img-wrap" style="display: block;">
+        <a href="product.html?id=${item.id}" class="product-card-img-wrap" style="display: block;">
           <img src="${imgUrl}" alt="${item.name}" class="product-card-img" onerror="this.src='/static/img/placeholder.svg'">
           <div class="product-card-badges">
             <span class="badge badge-govt">${item.category.toUpperCase()}</span>
@@ -78,7 +78,7 @@ async function loadBuyerProduce() {
           </div>
         </a>
         <div class="product-card-body">
-          <a href="/buyer/product/${item.id}" style="color: inherit; text-decoration: none;">
+          <a href="product.html?id=${item.id}" style="color: inherit; text-decoration: none;">
             <h3 class="product-card-title">${item.name}</h3>
           </a>
           <p class="product-card-subtitle">🧑‍🌾 Direct from ${farmerName} (${farmerPlace})</p>
@@ -196,8 +196,8 @@ async function loadBuyerOrders() {
           Your order <strong>#${latest.id}</strong> has been sent directly to the farm. Total payable on delivery: <strong style="color: var(--dark-green);">₹${parseFloat(latest.total).toFixed(2)}</strong>
         </p>
         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <a href="/buyer/produce" class="btn btn-primary btn-sm"><span>🌾 Browse More Fresh Harvests</span></a>
-          <a href="/buyer" class="btn btn-outline btn-sm"><span>🛒 Buyer Marketplace</span></a>
+          <a href="produce.html" class="btn btn-primary btn-sm"><span>🌾 Browse More Fresh Harvests</span></a>
+          <a href="home.html" class="btn btn-outline btn-sm"><span>🛒 Buyer Marketplace</span></a>
         </div>
       </div>
     `;
@@ -213,7 +213,7 @@ function renderBuyerOrders(orders, container, bannerHtml = "") {
         <div class="empty-state-icon">🛒</div>
         <div class="empty-state-title">No orders placed yet</div>
         <div class="empty-state-desc">Discover farm-fresh harvests and buy directly from nearby growers.</div>
-        <a href="/buyer/produce" class="btn btn-primary btn-sm" style="margin-top: 10px;">
+        <a href="produce.html" class="btn btn-primary btn-sm" style="margin-top: 10px;">
           <span>Explore Fresh Produce Marketplace →</span>
         </a>
       </div>

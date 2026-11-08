@@ -439,8 +439,8 @@ async function loadFarmerOrders() {
           Your booking <strong>#${latest.id}</strong> has been registered. Total payable at pickup / delivery: <strong style="color: var(--dark-green);">₹${parseFloat(latest.total).toFixed(2)}</strong>
         </p>
         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <a href="/farmer/inputs" class="btn btn-primary btn-sm"><span>🌱 Order More Inputs</span></a>
-          <a href="/farmer" class="btn btn-outline btn-sm"><span>🏠 Farmer Dashboard</span></a>
+          <a href="inputs.html" class="btn btn-primary btn-sm"><span>🌱 Order More Inputs</span></a>
+          <a href="dashboard.html" class="btn btn-outline btn-sm"><span>🏠 Farmer Dashboard</span></a>
         </div>
       </div>
     `;
@@ -456,7 +456,7 @@ function renderOrdersList(orders, container, bannerHtml = "") {
         <div class="empty-state-icon">📦</div>
         <div class="empty-state-title">No orders placed yet</div>
         <div class="empty-state-desc">Browse subsidized inputs and place your first order.</div>
-        <a href="/farmer/inputs" class="btn btn-primary btn-sm" style="margin-top: 10px;">
+        <a href="inputs.html" class="btn btn-primary btn-sm" style="margin-top: 10px;">
           <span>Explore Subsidized Inputs Catalog →</span>
         </a>
       </div>

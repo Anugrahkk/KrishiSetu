@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KrishiSetu | The Direct Digital Bridge for Kerala Farmers</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+  <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="static/img/logo.svg">
 </head>
 <body>
 
   <!-- Site Header -->
   <header class="site-header">
     <div class="container">
-      <a href="/" class="brand">
-        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+      <a href="index.html" class="brand">
+        <img src="static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-title" data-i18n="siteTitle">KrishiSetu</span>
           <span class="brand-subtitle">കൃഷിസേതു • Kerala</span>
@@ -39,14 +39,14 @@
 
         <!-- Two Entry Cards -->
         <div class="entry-cards-grid">
-          <a href="/farmer" class="entry-card">
+          <a href="templates/farmer/dashboard.html" class="entry-card">
             <div class="entry-card-icon">🌾</div>
             <h2 class="entry-card-title" data-i18n="iamFarmer">I am a Farmer</h2>
             <p class="entry-card-desc">Buy subsidized inputs, scan crop diseases with Crop Doctor, list your harvest, and call nearby vets.</p>
             <span class="btn btn-primary btn-block">Enter Farmer Portal →</span>
           </a>
 
-          <a href="/buyer" class="entry-card">
+          <a href="templates/buyer/home.html" class="entry-card">
             <div class="entry-card-icon">🛒</div>
             <h2 class="entry-card-title" data-i18n="iamBuyer">I am a Buyer</h2>
             <p class="entry-card-desc">Purchase 100% fresh vegetables, fruits, eggs, and milk directly from Kerala farmers at fair prices.</p>
@@ -104,17 +104,17 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-links">
-        <a href="/farmer">Farmer Portal</a> •
-        <a href="/buyer">Buyer Portal</a> •
-        <a href="/farmer/doctor">Crop Doctor</a> •
-        <a href="/login">Account Login</a>
+        <a href="templates/farmer/dashboard.html">Farmer Portal</a> •
+        <a href="templates/buyer/home.html">Buyer Portal</a> •
+        <a href="templates/farmer/doctor.html">Crop Doctor</a> •
+        <a href="login.html">Account Login</a>
       </div>
       <p>© 2026 KrishiSetu (കൃഷിസേതു) • TinkerHub Hackathon Prototype</p>
     </div>
   </footer>
 
   <!-- Scripts -->
-  <script src="/static/js/common.js"></script>
+  <script src="static/js/common.js"></script>
 </body>
 </html>
 

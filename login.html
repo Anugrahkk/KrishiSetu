@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | KrishiSetu</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+  <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="static/img/logo.svg">
 </head>
 <body>
 
   <!-- Site Header -->
   <header class="site-header">
     <div class="container">
-      <a href="/" class="brand">
-        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+      <a href="index.html" class="brand">
+        <img src="static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-title">KrishiSetu</span>
           <span class="brand-subtitle">Login</span>
@@ -48,7 +48,7 @@
         </form>
 
         <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">
-          Don't have an account? <a href="/register" style="font-weight: 600;">Register here</a>
+          Don't have an account? <a href="register.html" style="font-weight: 600;">Register here</a>
         </div>
 
         <div style="margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--card-border); font-size: 0.8rem; color: var(--text-muted); text-align: center;">
@@ -60,7 +60,7 @@
     </div>
   </main>
 
-  <script src="/static/js/common.js"></script>
+  <script src="static/js/common.js"></script>
   <script>
     function quickFill(phone, pwd, role) {
       document.getElementById('login-phone').value = phone;
@@ -87,7 +87,7 @@
           localStorage.setItem('krishi_user', JSON.stringify(data.user));
           showToast(`Welcome, ${data.user.name}!`, 'success');
           setTimeout(() => {
-            window.location.href = data.user.role === 'buyer' ? '/buyer' : '/farmer';
+            window.location.href = data.user.role === 'buyer' ? 'templates/buyer/home.html' : 'templates/farmer/dashboard.html';
           }, 500);
         } else {
           // Fallback simulation for offline demo
@@ -113,7 +113,7 @@
       localStorage.setItem('krishi_user', JSON.stringify(mockUser));
       showToast(`Logged in as ${mockUser.name}`, 'success');
       setTimeout(() => {
-        window.location.href = mockUser.role === 'buyer' ? '/buyer' : '/farmer';
+        window.location.href = mockUser.role === 'buyer' ? 'templates/buyer/home.html' : 'templates/farmer/dashboard.html';
       }, 500);
     }
   </script>

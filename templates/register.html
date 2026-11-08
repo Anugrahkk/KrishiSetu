@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | KrishiSetu</title>
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="../static/img/logo.svg">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <img src="../static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">KrishiSetu</span>
+          <span class="brand-subtitle">Registration</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 480px;">
+      <div class="surface-card" style="padding: 28px 24px;">
+        <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--dark-green); margin-bottom: 6px; text-align: center;">Create Account</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-bottom: 24px;">Join Kerala's direct agricultural network</p>
+
+        <form id="register-form">
+          <div class="form-group">
+            <label class="form-label">I want to join as</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <label style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1.5px solid var(--primary-green); border-radius: 10px; cursor: pointer; background: var(--light-green); font-weight: 600;">
+                <input type="radio" name="role" value="farmer" checked>
+                <span>🌾 Farmer</span>
+              </label>
+              <label style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border: 1.5px solid var(--card-border); border-radius: 10px; cursor: pointer; background: var(--card-surface); font-weight: 600;">
+                <input type="radio" name="role" value="buyer">
+                <span>🛒 Buyer</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" name="name" class="form-control" placeholder="e.g. Anugrah Nair" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone Number</label>
+            <input type="tel" id="reg-phone" name="phone" class="form-control" placeholder="10-digit mobile number" inputmode="numeric" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-district">District in Kerala</label>
+            <select id="reg-district" name="district" class="form-control" required>
+              <option value="Ernakulam">Ernakulam</option>
+              <option value="Thrissur">Thrissur</option>
+              <option value="Kottayam">Kottayam</option>
+              <option value="Idukki">Idukki</option>
+              <option value="Palakkad">Palakkad</option>
+              <option value="Alappuzha">Alappuzha</option>
+              <option value="Kollam">Kollam</option>
+              <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+              <option value="Kozhikode">Kozhikode</option>
+              <option value="Malappuram">Malappuram</option>
+              <option value="Wayanad">Wayanad</option>
+              <option value="Kannur">Kannur</option>
+              <option value="Kasaragod">Kasaragod</option>
+              <option value="Pathanamthitta">Pathanamthitta</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-village">Village / Panchayath</label>
+            <input type="text" id="reg-village" name="village" class="form-control" placeholder="e.g. Aluva East" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input type="password" id="reg-password" name="password" class="form-control" placeholder="Create a secure password" required minlength="4">
+          </div>
+
+          <button type="submit" id="reg-btn" class="btn btn-primary btn-block" style="margin-top: 20px;">
+            <span>Complete Registration →</span>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">
+          Already registered? <a href="login.html" style="font-weight: 600;">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/common.js"></script>
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const role = form.querySelector('input[name="role"]:checked').value;
+      const name = document.getElementById('reg-name').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const district = document.getElementById('reg-district').value;
+      const village = document.getElementById('reg-village').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const btn = document.getElementById('reg-btn');
+
+      btn.disabled = true;
+      btn.textContent = "Creating Account...";
+
+      const payload = { name, phone, password, role, district, village };
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          localStorage.setItem('krishi_user', JSON.stringify(data.user));
+          showToast(`Welcome to KrishiSetu, ${data.user.name}!`, 'success');
+          setTimeout(() => {
+            window.location.href = data.user.role === 'buyer' ? 'buyer/home.html' : 'farmer/dashboard.html';
+          }, 500);
+        } else {
+          // Fallback simulation for hackathon demo
+          localStorage.setItem('krishi_user', JSON.stringify({ name, phone, role, district, village }));
+          showToast('Account created! Welcome to KrishiSetu.', 'success');
+          setTimeout(() => { window.location.href = role === 'buyer' ? 'buyer/home.html' : 'farmer/dashboard.html'; }, 800);
+        }
+      } catch (err) {
+        localStorage.setItem('krishi_user', JSON.stringify({ name, phone, role, district, village }));
+        showToast('Account created! Welcome to KrishiSetu.', 'success');
+        setTimeout(() => { window.location.href = role === 'buyer' ? 'buyer/home.html' : 'farmer/dashboard.html'; }, 800);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Complete Registration →";
+      }
+    });
+  </script>
+</body>
+</html>
+

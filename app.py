@@ -80,52 +80,64 @@ def health_check():
 # Page Routes (Serves Member 1 Frontend Templates)
 # ---------------------------------------------------------------------------
 @app.route("/")
+@app.route("/index.html")
 def index_page():
     return render_template("index.html")
 
 @app.route("/login")
+@app.route("/login.html")
 def login_page():
     return render_template("login.html")
 
 @app.route("/register")
+@app.route("/register.html")
 def register_page():
     return render_template("register.html")
 
 # Farmer Pages
 @app.route("/farmer")
+@app.route("/farmer/dashboard.html")
 def farmer_dashboard():
     return render_template("farmer/dashboard.html")
 
 @app.route("/farmer/inputs")
+@app.route("/farmer/inputs.html")
 def farmer_inputs():
     return render_template("farmer/inputs.html")
 
 @app.route("/farmer/doctor")
+@app.route("/farmer/doctor.html")
 def farmer_doctor():
     return render_template("farmer/doctor.html")
 
 @app.route("/farmer/sell")
+@app.route("/farmer/sell.html")
 def farmer_sell():
     return render_template("farmer/sell.html")
 
 @app.route("/farmer/vets")
+@app.route("/farmer/vets.html")
 def farmer_vets():
     return render_template("farmer/vets.html")
 
 @app.route("/farmer/cart")
+@app.route("/farmer/cart.html")
 def farmer_cart():
     return render_template("farmer/cart.html")
 
 @app.route("/farmer/orders")
+@app.route("/farmer/orders.html")
 def farmer_orders():
     return render_template("farmer/orders.html")
 
 # Buyer Pages
 @app.route("/buyer")
+@app.route("/buyer/home.html")
 def buyer_home():
     return render_template("buyer/home.html")
 
 @app.route("/buyer/produce")
+@app.route("/buyer/produce.html")
 def buyer_produce():
     return render_template("buyer/produce.html")
 
@@ -133,13 +145,23 @@ def buyer_produce():
 def buyer_product(product_id):
     return render_template("buyer/product.html", product_id=product_id)
 
+@app.route("/buyer/product.html")
+def buyer_product_page():
+    return render_template("buyer/product.html")
+
 @app.route("/buyer/cart")
+@app.route("/buyer/cart.html")
 def buyer_cart():
     return render_template("buyer/cart.html")
 
 @app.route("/buyer/orders")
+@app.route("/buyer/orders.html")
 def buyer_orders():
     return render_template("buyer/orders.html")
+
+@app.route("/templates/<path:subpath>")
+def serve_template_direct(subpath):
+    return render_template(subpath)
 
 
 # ---------------------------------------------------------------------------

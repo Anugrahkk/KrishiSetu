@@ -69,7 +69,10 @@ function addItemToCart(item, showFeedback = true) {
   updateFloatingCartBar();
 
   if (showFeedback) {
-    const targetCart = (item.type === "produce" || window.location.pathname.includes("buyer")) ? "/buyer/cart" : "/farmer/cart";
+    const isInsideSub = window.location.pathname.includes("farmer") || window.location.pathname.includes("buyer");
+    const targetCart = (item.type === "produce" || window.location.pathname.includes("buyer"))
+      ? (isInsideSub ? "cart.html" : "templates/buyer/cart.html")
+      : (isInsideSub ? "cart.html" : "templates/farmer/cart.html");
     showToast(`Added ${addQty} ${item.unit || ""} of ${item.name} to cart. <a href="${targetCart}" style="color: #FFF; text-decoration: underline; font-weight: 700; margin-left: 6px;">Proceed to Cart →</a>`, "success");
   }
   
@@ -81,7 +84,10 @@ function addItemToCart(item, showFeedback = true) {
 
 function buyItemNow(item) {
   addItemToCart(item, false);
-  const targetCart = (item.type === "produce" || window.location.pathname.includes("buyer")) ? "/buyer/cart" : "/farmer/cart";
+  const isInsideSub = window.location.pathname.includes("farmer") || window.location.pathname.includes("buyer");
+  const targetCart = (item.type === "produce" || window.location.pathname.includes("buyer"))
+    ? (isInsideSub ? "cart.html" : "templates/buyer/cart.html")
+    : (isInsideSub ? "cart.html" : "templates/farmer/cart.html");
   window.location.href = targetCart;
 }
 
@@ -333,7 +339,7 @@ async function submitCheckout(e) {
   }
 
   const orderType = window.location.pathname.includes("buyer") ? "produce" : "input";
-  const nextUrl = orderType === "produce" ? "/buyer/orders?just_ordered=1" : "/farmer/orders?just_ordered=1";
+  const nextUrl = "orders.html?just_ordered=1";
 
   const payload = {
     order_type: orderType,
@@ -405,7 +411,7 @@ async function submitCheckout(e) {
 }
 
 function showOrderSuccess(orderId, totalAmount) {
-  const nextUrl = window.location.pathname.includes("farmer") ? "/farmer/orders?just_ordered=1" : "/buyer/orders?just_ordered=1";
+  const nextUrl = "orders.html?just_ordered=1";
   window.location.href = nextUrl;
 }
 
@@ -413,8 +419,8 @@ function showOrderSuccess(orderId, totalAmount) {
 // 6. Floating Cart Sequential Connector
 // ---------------------------------------------------------------------------
 function updateFloatingCartBar() {
-  const isInputsPage = window.location.pathname.includes("/farmer/inputs");
-  const isProducePage = window.location.pathname.includes("/buyer/produce");
+  const isInputsPage = window.location.pathname.includes("inputs");
+  const isProducePage = window.location.pathname.includes("produce");
   
   if (!isInputsPage && !isProducePage) {
     const existing = document.getElementById("floating-cart-bar");
@@ -432,7 +438,7 @@ function updateFloatingCartBar() {
 
   const totalCount = cart.reduce((sum, i) => sum + (parseInt(i.quantity) || 1), 0);
   const totalAmount = cart.reduce((sum, i) => sum + (parseFloat(i.price) * (parseInt(i.quantity) || 1)), 0);
-  const targetUrl = isProducePage ? "/buyer/cart" : "/farmer/cart";
+  const targetUrl = "cart.html";
   const stepLabel = isProducePage ? "Review Cart & Checkout (Step 2) →" : "Proceed to Cart & Price Calculation (Step 2) →";
 
   if (!bar) {

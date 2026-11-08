@@ -42,20 +42,35 @@ $mimeMap = @{
 }
 
 $pageRoutes = @{
-    "/"                 = "templates/index.html"
-    "/login"            = "templates/login.html"
-    "/register"         = "templates/register.html"
+    "/"                 = "index.html"
+    "/index.html"       = "index.html"
+    "/login"            = "login.html"
+    "/login.html"       = "login.html"
+    "/register"         = "register.html"
+    "/register.html"    = "register.html"
     "/farmer"           = "templates/farmer/dashboard.html"
+    "/farmer/dashboard.html" = "templates/farmer/dashboard.html"
     "/farmer/inputs"    = "templates/farmer/inputs.html"
+    "/farmer/inputs.html" = "templates/farmer/inputs.html"
     "/farmer/doctor"    = "templates/farmer/doctor.html"
+    "/farmer/doctor.html" = "templates/farmer/doctor.html"
     "/farmer/sell"      = "templates/farmer/sell.html"
+    "/farmer/sell.html" = "templates/farmer/sell.html"
     "/farmer/vets"      = "templates/farmer/vets.html"
+    "/farmer/vets.html" = "templates/farmer/vets.html"
     "/farmer/cart"      = "templates/farmer/cart.html"
+    "/farmer/cart.html" = "templates/farmer/cart.html"
     "/farmer/orders"    = "templates/farmer/orders.html"
+    "/farmer/orders.html" = "templates/farmer/orders.html"
     "/buyer"            = "templates/buyer/home.html"
+    "/buyer/home.html"  = "templates/buyer/home.html"
     "/buyer/produce"    = "templates/buyer/produce.html"
+    "/buyer/produce.html" = "templates/buyer/produce.html"
     "/buyer/cart"       = "templates/buyer/cart.html"
+    "/buyer/cart.html"  = "templates/buyer/cart.html"
     "/buyer/orders"     = "templates/buyer/orders.html"
+    "/buyer/orders.html"= "templates/buyer/orders.html"
+    "/buyer/product.html"= "templates/buyer/product.html"
 }
 
 while ($listener.IsListening) {
@@ -71,7 +86,7 @@ while ($listener.IsListening) {
 
         # Check for /buyer/product/{id}
         if ($path -match '^/buyer/product/\d+') {
-            $path = "templates/buyer/product.html"
+            $path = "/buyer/product.html"
         }
 
         # Enable CORS for API
@@ -100,10 +115,24 @@ while ($listener.IsListening) {
 
         if ($pageRoutes.ContainsKey($path)) {
             $targetFile = $pageRoutes[$path]
-        } elseif ($path.StartsWith("/static/")) {
-            $targetFile = $path.Substring(1)
-        } elseif ($path -eq "templates/buyer/product.html") {
-            $targetFile = "templates/buyer/product.html"
+        } else {
+            $rel = $path.TrimStart("/")
+            # Check direct path
+            if (Test-Path $rel) {
+                $targetFile = $rel
+            } elseif (Test-Path "templates/$rel") {
+                $targetFile = "templates/$rel"
+            } elseif (Test-Path "templates/farmer/$rel") {
+                $targetFile = "templates/farmer/$rel"
+            } elseif (Test-Path "templates/buyer/$rel") {
+                $targetFile = "templates/buyer/$rel"
+            } elseif (Test-Path "$rel.html") {
+                $targetFile = "$rel.html"
+            } elseif (Test-Path "templates/farmer/$rel.html") {
+                $targetFile = "templates/farmer/$rel.html"
+            } elseif (Test-Path "templates/buyer/$rel.html") {
+                $targetFile = "templates/buyer/$rel.html"
+            }
         }
 
         if ($targetFile -and (Test-Path $targetFile)) {

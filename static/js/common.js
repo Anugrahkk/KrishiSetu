@@ -156,6 +156,9 @@ function renderUserBadge() {
   const userSlot = document.getElementById("header-user-slot");
   if (!userSlot) return;
 
+  const isInsideTemplates = window.location.pathname.includes("/farmer/") || window.location.pathname.includes("/buyer/") || window.location.pathname.includes("\\farmer\\") || window.location.pathname.includes("\\buyer\\");
+  const loginUrl = isInsideTemplates ? "../../login.html" : "login.html";
+
   if (currentUser) {
     const roleEmoji = currentUser.role === "farmer" ? "🌾" : "🛒";
     userSlot.innerHTML = `
@@ -169,7 +172,7 @@ function renderUserBadge() {
     `;
   } else {
     userSlot.innerHTML = `
-      <a href="/login" class="btn btn-primary btn-sm">
+      <a href="${loginUrl}" class="btn btn-primary btn-sm">
         <span data-i18n="login">${currentLang === "ml" ? "പ്രവേശിക്കുക" : "Login"}</span>
       </a>
     `;
@@ -185,8 +188,12 @@ async function logoutUser() {
   localStorage.removeItem("krishi_user");
   currentUser = null;
   showToast("Logged out successfully", "info");
+
+  const isInsideTemplates = window.location.pathname.includes("/farmer/") || window.location.pathname.includes("/buyer/") || window.location.pathname.includes("\\farmer\\") || window.location.pathname.includes("\\buyer\\");
+  const homeUrl = isInsideTemplates ? "../../index.html" : "index.html";
+
   setTimeout(() => {
-    window.location.href = "/";
+    window.location.href = homeUrl;
   }, 400);
 }
 
@@ -234,10 +241,25 @@ function updateCartBadge() {
 // 5. Active Nav Highlighting
 // ---------------------------------------------------------------------------
 function highlightActiveNav() {
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname.replace(/\\/g, "/");
+  let currentFile = currentPath.substring(currentPath.lastIndexOf("/") + 1).toLowerCase();
+  if (!currentFile || currentFile === "") currentFile = "index.html";
+  if (!currentFile.endsWith(".html") && currentFile !== "farmer" && currentFile !== "buyer") {
+    currentFile += ".html";
+  }
+
   document.querySelectorAll(".bottom-nav-item, .header-nav a").forEach((link) => {
     const href = link.getAttribute("href");
-    if (href && (currentPath === href || (href !== "/" && currentPath.startsWith(href)))) {
+    if (!href) return;
+    let targetFile = href.split("?")[0].split("#")[0].replace(/\\/g, "/");
+    targetFile = targetFile.substring(targetFile.lastIndexOf("/") + 1).toLowerCase();
+    if (!targetFile.endsWith(".html") && targetFile !== "farmer" && targetFile !== "buyer" && targetFile !== "") {
+      targetFile += ".html";
+    }
+
+    if (currentFile === targetFile || 
+       ((currentFile === "farmer" || currentFile === "dashboard.html") && (targetFile === "farmer" || targetFile === "dashboard.html")) ||
+       ((currentFile === "buyer" || currentFile === "home.html") && (targetFile === "buyer" || targetFile === "home.html"))) {
       link.classList.add("active");
     } else {
       link.classList.remove("active");

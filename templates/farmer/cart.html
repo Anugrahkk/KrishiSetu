@@ -4,33 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subsidized Inputs Cart & Checkout | KrishiSetu</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
+  <link rel="stylesheet" href="../../static/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="../../static/img/logo.svg">
 </head>
 <body>
 
   <!-- Site Header -->
   <header class="site-header">
     <div class="container">
-      <a href="/farmer" class="brand">
-        <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
+      <a href="dashboard.html" class="brand">
+        <img src="../../static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-title">KrishiSetu</span>
           <span class="brand-subtitle">Farmer Portal 🌾</span>
         </div>
       </a>
       <nav class="header-nav">
-        <a href="/farmer" data-i18n="home">Home</a>
-        <a href="/farmer/doctor" data-i18n="cropDoctor">Crop Doctor</a>
-        <a href="/farmer/inputs" data-i18n="buyInputs">Buy Inputs</a>
-        <a href="/farmer/cart" class="active" data-i18n="cart">Cart</a>
-        <a href="/farmer/orders" data-i18n="orders">Orders</a>
-        <a href="/farmer/sell" data-i18n="sellProduce">Sell</a>
-        <a href="/farmer/vets" data-i18n="findVet">Vets</a>
+        <a href="dashboard.html" data-i18n="home">Home</a>
+        <a href="doctor.html" data-i18n="cropDoctor">Crop Doctor</a>
+        <a href="inputs.html" data-i18n="buyInputs">Buy Inputs</a>
+        <a href="cart.html" class="active" data-i18n="cart">Cart</a>
+        <a href="orders.html" data-i18n="orders">Orders</a>
+        <a href="sell.html" data-i18n="sellProduce">Sell</a>
+        <a href="vets.html" data-i18n="findVet">Vets</a>
       </nav>
       <div class="header-actions">
         <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
-        <a href="/farmer/cart" class="cart-icon-btn" title="View Cart">
+        <a href="cart.html" class="cart-icon-btn" title="View Cart">
           <span>🛒</span>
           <span class="cart-counter" style="display: none;">0</span>
         </a>
@@ -45,12 +45,12 @@
 
       <!-- Breadcrumbs -->
       <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;">
-        <a href="/farmer">Farmer Portal</a> &gt; <a href="/farmer/inputs">Buy Inputs</a> &gt; <span>Cart & Checkout</span>
+        <a href="dashboard.html">Farmer Portal</a> &gt; <a href="inputs.html">Buy Inputs</a> &gt; <span>Cart & Checkout</span>
       </div>
 
       <!-- Sequential Flow Steps Tracker -->
       <div class="flow-steps">
-        <a href="/farmer/inputs" class="flow-step completed">
+        <a href="inputs.html" class="flow-step completed">
           <span class="flow-step-num">✓</span>
           <span>1. Inputs Selected</span>
         </a>
@@ -60,7 +60,7 @@
           <span>2. Cart & Billing Details</span>
         </div>
         <span class="flow-step-arrow">➔</span>
-        <a href="/farmer/orders" class="flow-step">
+        <a href="orders.html" class="flow-step">
           <span class="flow-step-num">3</span>
           <span>3. Order Placed & Tracking</span>
         </a>
@@ -70,7 +70,7 @@
         <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green);">
           🛒 Subsidized Agri-Inputs Cart
         </h1>
-        <a href="/farmer/inputs" style="font-size: 0.9rem; font-weight: 600;">← Back to Inputs Catalog</a>
+        <a href="inputs.html" style="font-size: 0.9rem; font-weight: 600;">← Back to Inputs Catalog</a>
       </div>
 
       <!-- Cart Empty View -->
@@ -78,7 +78,7 @@
         <div class="empty-state-icon">🌱</div>
         <h2 class="empty-state-title">Your input cart is empty</h2>
         <p class="empty-state-desc">You have not selected any seeds, vermicompost, or bio-fertilizers yet.</p>
-        <a href="/farmer/inputs" class="btn btn-primary">
+        <a href="inputs.html" class="btn btn-primary">
           <span>Explore Subsidized Inputs Catalog →</span>
         </a>
       </div>
@@ -233,10 +233,10 @@
       </div>
 
       <div style="display: flex; gap: 10px; justify-content: center;">
-        <a href="/farmer/orders" class="btn btn-primary">
+        <a href="orders.html" class="btn btn-primary">
           <span>View My Orders →</span>
         </a>
-        <a href="/farmer" class="btn btn-outline">
+        <a href="dashboard.html" class="btn btn-outline">
           <span>Farmer Dashboard</span>
         </a>
       </div>
@@ -245,31 +245,31 @@
 
   <!-- Mobile Bottom Navigation (5 icons) -->
   <nav class="bottom-nav">
-    <a href="/farmer" class="bottom-nav-item">
+    <a href="dashboard.html" class="bottom-nav-item">
       <span class="nav-icon">🏠</span>
       <span data-i18n="home">Home</span>
     </a>
-    <a href="/farmer/doctor" class="bottom-nav-item">
+    <a href="doctor.html" class="bottom-nav-item">
       <span class="nav-icon">🩺</span>
       <span data-i18n="cropDoctor">Doctor</span>
     </a>
-    <a href="/farmer/inputs" class="bottom-nav-item">
+    <a href="inputs.html" class="bottom-nav-item">
       <span class="nav-icon">🌱</span>
       <span data-i18n="buyInputs">Inputs</span>
     </a>
-    <a href="/farmer/cart" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
+    <a href="cart.html" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
       <span class="nav-icon">🛒</span>
       <span data-i18n="cart">Cart</span>
     </a>
-    <a href="/farmer/orders" class="bottom-nav-item">
+    <a href="orders.html" class="bottom-nav-item">
       <span class="nav-icon">📦</span>
       <span data-i18n="orders">Orders</span>
     </a>
   </nav>
 
   <!-- Scripts -->
-  <script src="/static/js/common.js"></script>
-  <script src="/static/js/cart.js"></script>
+  <script src="../../static/js/common.js"></script>
+  <script src="../../static/js/cart.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       if (currentUser) {
