@@ -21,11 +21,12 @@
       </a>
       <nav class="header-nav">
         <a href="/farmer" data-i18n="home">Home</a>
-        <a href="/farmer/inputs" class="active" data-i18n="buyInputs">Buy Inputs</a>
         <a href="/farmer/doctor" data-i18n="cropDoctor">Crop Doctor</a>
+        <a href="/farmer/inputs" class="active" data-i18n="buyInputs">Buy Inputs</a>
+        <a href="/farmer/cart" data-i18n="cart">Cart</a>
+        <a href="/farmer/orders" data-i18n="orders">Orders</a>
         <a href="/farmer/sell" data-i18n="sellProduce">Sell</a>
         <a href="/farmer/vets" data-i18n="findVet">Vets</a>
-        <a href="/farmer/orders" data-i18n="orders">Orders</a>
       </nav>
       <div class="header-actions">
         <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
@@ -42,14 +43,42 @@
   <main class="main-content">
     <div class="container">
 
+      <!-- Sequential Flow Steps Tracker -->
+      <div class="flow-steps">
+        <a href="/farmer/doctor" class="flow-step completed">
+          <span class="flow-step-num">✓</span>
+          <span>1. Crop Doctor Scan</span>
+        </a>
+        <span class="flow-step-arrow">➔</span>
+        <div class="flow-step active">
+          <span class="flow-step-num">2</span>
+          <span>2. Select Subsidized Inputs</span>
+        </div>
+        <span class="flow-step-arrow">➔</span>
+        <a href="/farmer/cart" class="flow-step">
+          <span class="flow-step-num">3</span>
+          <span>3. Cart & Billing</span>
+        </a>
+        <span class="flow-step-arrow">➔</span>
+        <a href="/farmer/orders" class="flow-step">
+          <span class="flow-step-num">4</span>
+          <span>4. Order Placed & Tracking</span>
+        </a>
+      </div>
+
       <!-- Page Header -->
-      <div style="margin-bottom: 20px;">
-        <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 6px;">
-          🌱 Subsidized Agricultural Inputs
-        </h1>
-        <p style="font-size: 0.95rem; color: var(--text-muted);">
-          Compare certified seeds, bio-manure, and fertilizers directly from Krishibhavans, Co-operatives, and local dealers.
-        </p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <div>
+          <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 6px;">
+            🌱 Subsidized Agricultural Inputs
+          </h1>
+          <p style="font-size: 0.95rem; color: var(--text-muted);">
+            Compare certified seeds, bio-manure, and fertilizers directly from Krishibhavans, Co-operatives, and local dealers.
+          </p>
+        </div>
+        <a href="/farmer/cart" class="btn btn-primary" style="white-space: nowrap;">
+          <span>🛒 Proceed to Cart & Billing →</span>
+        </a>
       </div>
 
       <!-- Filters Bar -->
@@ -112,21 +141,21 @@
       <span class="nav-icon">🏠</span>
       <span data-i18n="home">Home</span>
     </a>
-    <a href="/farmer/inputs" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
-      <span class="nav-icon">🌱</span>
-      <span data-i18n="buyInputs">Inputs</span>
-    </a>
     <a href="/farmer/doctor" class="bottom-nav-item">
       <span class="nav-icon">🩺</span>
       <span data-i18n="cropDoctor">Doctor</span>
     </a>
-    <a href="/farmer/sell" class="bottom-nav-item">
-      <span class="nav-icon">🌾</span>
-      <span data-i18n="sellProduce">Sell</span>
+    <a href="/farmer/inputs" class="bottom-nav-item active" style="color: var(--primary-green); font-weight: 800;">
+      <span class="nav-icon">🌱</span>
+      <span data-i18n="buyInputs">Inputs</span>
     </a>
-    <a href="/farmer/vets" class="bottom-nav-item">
-      <span class="nav-icon">📞</span>
-      <span data-i18n="findVet">Vets</span>
+    <a href="/farmer/cart" class="bottom-nav-item">
+      <span class="nav-icon">🛒</span>
+      <span data-i18n="cart">Cart</span>
+    </a>
+    <a href="/farmer/orders" class="bottom-nav-item">
+      <span class="nav-icon">📦</span>
+      <span data-i18n="orders">Orders</span>
     </a>
   </nav>
 

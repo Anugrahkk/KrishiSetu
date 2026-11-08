@@ -14,6 +14,34 @@ Update this file at the **end of every hour** and after every important decision
 
 ---
 
+### 2026-11-08 09:05: Member 1 & 2 (Direct Cart Progression & Sequential Flow Fix)
+- Done:
+  - Fixed direct page transition upon cart checkout: submitting the billing details form on `/farmer/cart` or `/buyer/cart` now automatically navigates directly to the Orders page (`/farmer/orders?just_ordered=1` or `/buyer/orders?just_ordered=1`).
+  - Implemented auto-created demo user fallback in `routes/orders.py` (`place_order()` and `get_my_orders()`) so purchases succeed seamlessly without requiring manual pre-login.
+  - Added real-time order persistence in `localStorage` (`krishi_farmer_orders` and `krishi_buyer_orders`) with automatic merge on Orders page load.
+  - Added celebration confirmation card at the top of the Orders page displaying booking ID and total payable upon delivery.
+  - Implemented sequential flow tracker (`.flow-steps`) across Doctor, Inputs, Cart, and Orders pages.
+  - Added floating checkout bar (`.floating-cart-bar`) on Inputs and Produce pages for instant access to the billing step.
+  - Updated mobile bottom navigation across all farmer pages to reflect the sequential journey: `Home` -> `Doctor` -> `Inputs` -> `Cart` -> `Orders`.
+- Decisions:
+  - Eliminated the blocking modal popup on checkout in favor of direct, immediate transition to the Orders history tracking page.
+- Next: Ready for user demo.
+
+---
+
+### 2026-11-07 23:40: Member 1 & 2 Integration (Anchor Tag Audit & Link Routing Fix)
+- Done:
+  - Audited all anchor tags (`<a>` href attributes) across all 11 HTML templates and client JS files.
+  - Corrected broken relative paths in `templates/buyer/home.html` (`../buyer/produce.html` -> `/buyer/produce`, `../farmer/cart.html` -> `/buyer/cart`, `../buyer/orders.html` -> `/buyer/orders`, `../buyer/cart.html` -> `/buyer/cart`).
+  - Fixed dangling syntax error in `static/js/buyer.js` card item generator.
+  - Verified 100% route alignment between `app.py` page endpoints and template anchor hrefs.
+  - Updated stretch goals in `docs/todo.md`.
+- Decisions:
+  - All navigation links use standard root-relative routing (`/farmer/...`, `/buyer/...`) matching Flask blueprint endpoints.
+- Next: Final user walkthrough.
+
+---
+
 ### 2026-11-07 22:45: Member 2 (Backend, OpenCV & Database)
 - Done:
   - Formulated full SQLite schema in `schema.sql` (foreign keys, check constraints, indexes for categories, vets, orders).

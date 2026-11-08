@@ -131,22 +131,40 @@ async function loadInputs() {
           <h3 class="product-card-title">${item.name}</h3>
           <p class="product-card-subtitle">🏛️ ${seller.name} (${seller.district})</p>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">${item.description || "Subsidized agricultural input."}</p>
-          <div class="product-card-footer">
+          <div class="product-card-footer" style="flex-wrap: wrap; gap: 8px;">
             <div>
               <span class="price-tag">₹${parseFloat(item.price).toFixed(0)}</span>
               <span class="price-unit">/ ${item.unit}</span>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="addItemToCart({
-              id: ${item.id},
-              name: '${item.name.replace(/'/g, "\\'")}',
-              price: ${item.price},
-              unit: '${item.unit}',
-              type: 'input',
-              sellerName: '${seller.name.replace(/'/g, "\\'")}',
-              quantity: 1
-            })">
-              <span>➕ Add</span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <div class="stepper-box" style="height: 36px;">
+                <button type="button" class="stepper-btn" style="width: 28px; height: 36px;" onclick="adjustCardQty('input-qty-${item.id}', -1)">−</button>
+                <input type="number" id="input-qty-${item.id}" class="stepper-input" style="width: 36px; height: 36px;" value="1" min="1" max="999">
+                <button type="button" class="stepper-btn" style="width: 28px; height: 36px;" onclick="adjustCardQty('input-qty-${item.id}', 1)">+</button>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="addItemToCart({
+                id: ${item.id},
+                name: '${item.name.replace(/'/g, "\\'")}',
+                price: ${item.price},
+                unit: '${item.unit}',
+                type: 'input',
+                sellerName: '${seller.name.replace(/'/g, "\\'")}',
+                quantity: parseInt(document.getElementById('input-qty-${item.id}').value) || 1
+              })">
+                <span>➕ Add</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="buyItemNow({
+                id: ${item.id},
+                name: '${item.name.replace(/'/g, "\\'")}',
+                price: ${item.price},
+                unit: '${item.unit}',
+                type: 'input',
+                sellerName: '${seller.name.replace(/'/g, "\\'")}',
+                quantity: parseInt(document.getElementById('input-qty-${item.id}').value) || 1
+              })">
+                <span>⚡ Buy Now →</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -367,44 +385,86 @@ async function loadFarmerOrders() {
   const container = document.getElementById("farmer-orders-list");
   if (!container) return;
 
+  let orders = [];
+
   try {
     const res = await fetch("/api/orders/mine");
     if (res.ok) {
       const data = await res.json();
-      renderOrdersList(data.orders || [], container);
-      return;
+      orders = data.orders || [];
     }
   } catch (_) {}
 
-  // Sample order fallback
-  renderOrdersList([
-    {
-      id: 12,
-      order_type: "input",
-      total: 390.0,
-      status: "placed",
-      created_at: "2026-11-07 16:30",
-      items: [
-        { item_name: "Vermicompost", unit_price: 18, quantity: 10 },
-        { item_name: "Paddy Seeds", unit_price: 40, quantity: 5 }
-      ]
+  // Merge locally stored orders placed by farmer
+  try {
+    const localRaw = localStorage.getItem("krishi_farmer_orders");
+    if (localRaw) {
+      const localOrders = JSON.parse(localRaw);
+      localOrders.forEach((lo) => {
+        if (!orders.some((o) => o.id === lo.id)) {
+          orders.unshift(lo);
+        }
+      });
     }
-  ], container);
+  } catch (_) {}
+
+  if (orders.length === 0) {
+    orders = [
+      {
+        id: 12,
+        order_type: "input",
+        total: 390.0,
+        status: "placed",
+        created_at: "2026-11-07 16:30",
+        items: [
+          { item_name: "Vermicompost", unit_price: 18, quantity: 10 },
+          { item_name: "Paddy Seeds", unit_price: 40, quantity: 5 }
+        ]
+      }
+    ];
+  }
+
+  // Check if just navigated from checkout
+  const urlParams = new URLSearchParams(window.location.search);
+  const isJustOrdered = urlParams.get("just_ordered") === "1";
+  let successBanner = "";
+
+  if (isJustOrdered && orders.length > 0) {
+    const latest = orders[0];
+    successBanner = `
+      <div class="surface-card" style="background: linear-gradient(135deg, #E8F5E9 0%, #FAF8F2 100%); border: 2px solid var(--primary-green); padding: 20px; margin-bottom: 24px; text-align: center; animation: slideUpFade 0.3s ease;">
+        <div style="font-size: 2.5rem; margin-bottom: 6px;">🎉</div>
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--dark-green); margin-bottom: 6px;">Order Placed Successfully!</h2>
+        <p style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 12px;">
+          Your booking <strong>#${latest.id}</strong> has been registered. Total payable at pickup / delivery: <strong style="color: var(--dark-green);">₹${parseFloat(latest.total).toFixed(2)}</strong>
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <a href="/farmer/inputs" class="btn btn-primary btn-sm"><span>🌱 Order More Inputs</span></a>
+          <a href="/farmer" class="btn btn-outline btn-sm"><span>🏠 Farmer Dashboard</span></a>
+        </div>
+      </div>
+    `;
+  }
+
+  renderOrdersList(orders, container, successBanner);
 }
 
-function renderOrdersList(orders, container) {
+function renderOrdersList(orders, container, bannerHtml = "") {
   if (orders.length === 0) {
-    container.innerHTML = `
+    container.innerHTML = bannerHtml + `
       <div class="empty-state">
         <div class="empty-state-icon">📦</div>
         <div class="empty-state-title">No orders placed yet</div>
         <div class="empty-state-desc">Browse subsidized inputs and place your first order.</div>
+        <a href="/farmer/inputs" class="btn btn-primary btn-sm" style="margin-top: 10px;">
+          <span>Explore Subsidized Inputs Catalog →</span>
+        </a>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = orders.map((o) => `
+  container.innerHTML = bannerHtml + orders.map((o) => `
     <div class="surface-card" style="margin-bottom: 16px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
         <div>
@@ -429,10 +489,38 @@ function renderOrdersList(orders, container) {
   `).join("");
 }
 
+function adjustCardQty(inputId, delta) {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+  let val = parseInt(el.value) || 1;
+  val = Math.max(1, Math.min(999, val + delta));
+  el.value = val;
+}
+
 // ---------------------------------------------------------------------------
 // 6. DOM Initialization
 // ---------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
+  // Read URL params (e.g. ?category=manure&q=neem from Crop Doctor)
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramCat = urlParams.get("category");
+  const paramQ = urlParams.get("q");
+
+  if (paramCat) {
+    document.querySelectorAll(".chip-btn[data-category]").forEach((b) => {
+      if (b.getAttribute("data-category") === paramCat) {
+        b.classList.add("active");
+      } else {
+        b.classList.remove("active");
+      }
+    });
+  }
+
+  if (paramQ) {
+    const searchEl = document.getElementById("input-search");
+    if (searchEl) searchEl.value = paramQ;
+  }
+
   initFarmerDashboard();
   loadInputs();
   loadMyProduce();

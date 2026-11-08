@@ -249,6 +249,25 @@ document.addEventListener("DOMContentLoaded", () => {
       disclaimerEl.textContent = data.disclaimer;
     }
 
+    // Link treatment button to specific inputs
+    const treatmentBtn = document.getElementById("treatment-link-btn");
+    if (treatmentBtn) {
+      const code = data.condition_code || "";
+      if (code === "leaf_spot") {
+        treatmentBtn.href = "/farmer/inputs?category=manure&q=neem";
+        treatmentBtn.innerHTML = "<span>🌱 Find Neem & Bio-Fungicide Inputs →</span>";
+      } else if (code === "yellowing") {
+        treatmentBtn.href = "/farmer/inputs?category=manure&q=vermicompost";
+        treatmentBtn.innerHTML = "<span>🌱 Find Vermicompost & Micronutrients →</span>";
+      } else if (code === "powdery") {
+        treatmentBtn.href = "/farmer/inputs?q=bio";
+        treatmentBtn.innerHTML = "<span>🌱 Find Bio-Control Treatments →</span>";
+      } else {
+        treatmentBtn.href = "/farmer/inputs";
+        treatmentBtn.innerHTML = "<span>🌱 Explore Agri-Inputs & Fertilizers →</span>";
+      }
+    }
+
     resultCard.style.display = "block";
     resultCard.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast("Scan completed successfully", "success");

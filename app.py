@@ -131,7 +131,7 @@ def buyer_produce():
 
 @app.route("/buyer/product/<int:product_id>")
 def buyer_product(product_id):
-    return render_template("buyer/product.html")
+    return render_template("buyer/product.html", product_id=product_id)
 
 @app.route("/buyer/cart")
 def buyer_cart():

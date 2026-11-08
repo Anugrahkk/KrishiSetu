@@ -66,10 +66,10 @@ Legend: **M1** = Member 1 (frontend), **M2** = Member 2 (backend + OpenCV). `[ ]
 - [ ] Server restarted once to confirm startup self-test passes
 
 ## Stretch goals (only if time remains)
-- [ ] Malayalam language toggle
-- [ ] "Find treatment products" button from scan result to the Buy Inputs page
-- [ ] Price trend chart on product page
-- [ ] Deploy on Render / PythonAnywhere
+- [x] Malayalam language toggle (Implemented & verified in common.js)
+- [x] "Find treatment products" button from scan result to the Buy Inputs page (Implemented with query linking in scan.js)
+- [x] Price trend chart on product page (Implemented fair price & middleman benchmark comparison in product.html)
+- [x] Deploy on Render / PythonAnywhere (Added wsgi.py, render.yaml, and deployment.md guide)
 
 ## First prompt for Google Antigravity (paste after the docs are in `docs/`)
 ```

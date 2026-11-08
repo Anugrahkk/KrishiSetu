@@ -124,8 +124,11 @@
         });
         const data = await res.json();
         if (res.ok && data.ok) {
-          showToast('Account created successfully! Please log in.', 'success');
-          setTimeout(() => { window.location.href = '/login'; }, 800);
+          localStorage.setItem('krishi_user', JSON.stringify(data.user));
+          showToast(`Welcome to KrishiSetu, ${data.user.name}!`, 'success');
+          setTimeout(() => {
+            window.location.href = data.user.role === 'buyer' ? '/buyer' : '/farmer';
+          }, 500);
         } else {
           // Fallback simulation for hackathon demo
           localStorage.setItem('krishi_user', JSON.stringify({ name, phone, role, district, village }));

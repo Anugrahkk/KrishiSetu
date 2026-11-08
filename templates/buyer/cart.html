@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buyer Cart & Checkout | KrishiSetu</title>
+  <title>Fresh Produce Cart & Checkout | KrishiSetu</title>
   <link rel="stylesheet" href="/static/css/styles.css">
   <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
 </head>
@@ -16,7 +16,7 @@
         <img src="/static/img/logo.svg" alt="KrishiSetu Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-title">KrishiSetu</span>
-          <span class="brand-subtitle">Produce Cart 🛒</span>
+          <span class="brand-subtitle">Fresh Farm Direct 🛒</span>
         </div>
       </a>
       <nav class="header-nav">
@@ -27,6 +27,10 @@
       </nav>
       <div class="header-actions">
         <button id="lang-toggle-btn" class="lang-toggle-btn" type="button">🌐 മലയാളം</button>
+        <a href="/buyer/cart" class="cart-icon-btn" title="View Cart">
+          <span>🛒</span>
+          <span class="cart-counter" style="display: none;">0</span>
+        </a>
         <div id="header-user-slot"></div>
       </div>
     </div>
@@ -36,61 +40,173 @@
   <main class="main-content">
     <div class="container">
 
-      <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 20px;">
-        🛒 Fresh Produce Cart & Checkout
-      </h1>
+      <!-- Breadcrumbs -->
+      <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;">
+        <a href="/buyer">Buyer Portal</a> &gt; <a href="/buyer/produce">Fresh Produce</a> &gt; <span>Cart & Checkout</span>
+      </div>
+
+      <!-- Sequential Flow Steps Tracker -->
+      <div class="flow-steps">
+        <a href="/buyer/produce" class="flow-step completed">
+          <span class="flow-step-num">✓</span>
+          <span>1. Produce Selected</span>
+        </a>
+        <span class="flow-step-arrow">➔</span>
+        <div class="flow-step active">
+          <span class="flow-step-num">2</span>
+          <span>2. Cart & Billing Details</span>
+        </div>
+        <span class="flow-step-arrow">➔</span>
+        <a href="/buyer/orders" class="flow-step">
+          <span class="flow-step-num">3</span>
+          <span>3. Order Placed & Tracking</span>
+        </a>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+        <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green);">
+          🛒 Fresh Farm Harvest Cart
+        </h1>
+        <a href="/buyer/produce" style="font-size: 0.9rem; font-weight: 600;">← Back to Produce Marketplace</a>
+      </div>
 
       <!-- Cart Empty View -->
       <div id="cart-empty-view" class="empty-state" style="display: none;">
         <div class="empty-state-icon">🛒</div>
         <h2 class="empty-state-title">Your produce cart is empty</h2>
-        <p class="empty-state-desc">You haven't selected any fresh farm fruits, vegetables, or eggs yet.</p>
+        <p class="empty-state-desc">You have not selected any farm fruits, vegetables, eggs, or milk yet.</p>
         <a href="/buyer/produce" class="btn btn-primary">
-          <span>Explore Fresh Produce →</span>
+          <span>Explore Fresh Produce Marketplace →</span>
         </a>
       </div>
 
       <!-- Cart Layout -->
       <div class="cart-layout">
-        <!-- Item List -->
-        <div class="surface-card">
-          <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">Selected Farm Produce</h2>
-          <div id="cart-items-container"></div>
-          
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 2px dashed var(--card-border);">
-            <span style="font-size: 1.1rem; font-weight: 700;">Subtotal:</span>
-            <span id="cart-subtotal" style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: var(--dark-green);">₹0.00</span>
+        
+        <!-- Left Column: Items & In-Cart Add Section -->
+        <div>
+          <div class="surface-card" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 style="font-size: 1.15rem; font-weight: 700;">Selected Produce Items</h2>
+              <button type="button" class="btn btn-outline btn-sm" onclick="clearCart()">
+                <span>Empty Cart</span>
+              </button>
+            </div>
+
+            <!-- Dynamic Cart Items List with Quantity & Price Recalculation -->
+            <div id="cart-items-container"></div>
+          </div>
+
+          <!-- Section for Adding Additional Product Quantity and Calculating Price -->
+          <div class="quick-add-card">
+            <div class="quick-add-card-header">
+              <span>➕</span>
+              <span>Add More Produce & Calculate Price</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              Want to add country eggs, bananas, or vegetables? Select produce below to instantly calculate price and include in this delivery.
+            </p>
+
+            <div class="quick-add-grid">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" style="font-size: 0.8rem;" for="quick-add-select">Choose Farm Produce</label>
+                <select id="quick-add-select" class="form-control" onchange="updateQuickAddPreview()"></select>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" style="font-size: 0.8rem;" for="quick-add-qty">Quantity</label>
+                <div class="stepper-box" style="width: 100%;">
+                  <button type="button" class="stepper-btn" onclick="adjustQuickAddQty(-1)">−</button>
+                  <input type="number" id="quick-add-qty" class="stepper-input" value="1" min="1" max="999" onchange="updateQuickAddPreview()" oninput="updateQuickAddPreview()">
+                  <button type="button" class="stepper-btn" onclick="adjustQuickAddQty(1)">+</button>
+                </div>
+              </div>
+
+              <div>
+                <button type="button" class="btn btn-primary btn-block" style="min-height: 40px;" onclick="executeQuickAdd()">
+                  <span>Add & Recalculate</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="quick-add-calc-preview" class="quick-add-preview-line">
+              Live Calculation: Calculating...
+            </div>
           </div>
         </div>
 
-        <!-- Checkout Form Card -->
-        <div id="cart-checkout-card" class="surface-card">
-          <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">Delivery Details</h2>
-          <form id="checkout-form">
-            <div class="form-group">
-              <label class="form-label" for="checkout-name">Buyer / Contact Name</label>
-              <input type="text" id="checkout-name" class="form-control" placeholder="Full Name" required>
+        <!-- Right Column: Order Price Summary & Checkout Details -->
+        <div id="cart-checkout-card">
+          <!-- Summary Box -->
+          <div class="surface-card" style="margin-bottom: 20px;">
+            <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 16px;">
+              📊 Order Price Summary
+            </h2>
+
+            <div class="summary-line-item">
+              <span>Produce Subtotal</span>
+              <span id="cart-subtotal-val" style="font-family: var(--font-mono); font-weight: 700;">₹0.00</span>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="checkout-phone">Phone Number</label>
-              <input type="tel" id="checkout-phone" class="form-control" placeholder="10-digit mobile number" required>
+            <div class="summary-line-item">
+              <span>Items in Cart</span>
+              <span id="cart-item-count" style="font-family: var(--font-mono); color: var(--text-muted);">0 items</span>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="checkout-address">Delivery Address</label>
-              <textarea id="checkout-address" class="form-control" rows="3" placeholder="House/Flat number, Street, City, Landmark" required></textarea>
+            <div class="summary-line-item">
+              <span>Direct Farm Pricing</span>
+              <span style="font-family: var(--font-mono); color: var(--primary-green); font-weight: 700;">Zero Middlemen</span>
             </div>
 
-            <div style="background: var(--light-green); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.85rem; color: var(--dark-green);">
-              💵 <strong>Payment Method:</strong> Cash on Delivery. Pay only when you receive your farm-fresh harvest.
+            <div class="summary-line-item">
+              <span>Delivery Fee</span>
+              <span style="font-family: var(--font-mono); color: var(--primary-green); font-weight: 700;">FREE</span>
             </div>
 
-            <button type="submit" id="place-order-btn" class="btn btn-primary btn-block">
-              <span>Place Order (Pay on Delivery)</span>
-            </button>
-          </form>
+            <div class="summary-divider"></div>
+
+            <div class="grand-total-row">
+              <span>Grand Total:</span>
+              <span id="cart-grand-total" class="grand-total-amount">₹0.00</span>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-align: right; margin-top: 4px;">
+              (Pay cash to the farmer upon delivery)
+            </div>
+          </div>
+
+          <!-- Checkout Details Form -->
+          <div class="surface-card">
+            <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">
+              📦 Delivery & Contact Info
+            </h2>
+
+            <form id="checkout-form">
+              <div class="form-group">
+                <label class="form-label" for="checkout-name">Recipient Name</label>
+                <input type="text" id="checkout-name" class="form-control" placeholder="Your full name" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="checkout-phone">Phone Number</label>
+                <input type="tel" id="checkout-phone" class="form-control" placeholder="10-digit mobile number" inputmode="numeric" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="checkout-address">Delivery Address</label>
+                <textarea id="checkout-address" class="form-control" rows="3" placeholder="House/Flat number, Street, City, Landmark" required></textarea>
+              </div>
+
+              <div style="background: var(--light-green); border: 1px solid #A5D6A7; border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.85rem; color: var(--dark-green);">
+                💵 <strong>Payment Mode:</strong> Cash on Delivery. Check the freshness of the produce before paying.
+              </div>
+
+              <button type="submit" id="place-order-btn" class="btn btn-primary btn-block">
+                <span>Place Order (Pay on Delivery)</span>
+              </button>
+            </form>
+          </div>
         </div>
+
       </div>
 
     </div>
@@ -102,7 +218,7 @@
       <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
       <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark-green); margin-bottom: 8px;">Order Placed Successfully!</h2>
       <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 16px;">
-        Thank you for supporting Kerala's local farmers! The farmer has received your order request.
+        Thank you for supporting Kerala's local farmers! The farmer has received your harvest order request.
       </p>
 
       <div class="info-card" style="margin-bottom: 20px;">
@@ -159,4 +275,3 @@
   </script>
 </body>
 </html>
-

@@ -40,14 +40,37 @@
   <main class="main-content">
     <div class="container">
 
+      <!-- Sequential Flow Steps Tracker -->
+      <div class="flow-steps">
+        <div class="flow-step active">
+          <span class="flow-step-num">1</span>
+          <span>1. Browse Fresh Produce</span>
+        </div>
+        <span class="flow-step-arrow">➔</span>
+        <a href="/buyer/cart" class="flow-step">
+          <span class="flow-step-num">2</span>
+          <span>2. Cart & Billing Details</span>
+        </a>
+        <span class="flow-step-arrow">➔</span>
+        <a href="/buyer/orders" class="flow-step">
+          <span class="flow-step-num">3</span>
+          <span>3. Order Placed & Tracking</span>
+        </a>
+      </div>
+
       <!-- Header -->
-      <div style="margin-bottom: 20px;">
-        <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 6px;">
-          🌾 Kerala Farm-Fresh Produce
-        </h1>
-        <p style="font-size: 0.95rem; color: var(--text-muted);">
-          Buy directly from verified local farmers. Look for the <span class="badge badge-fair-price">✓ FAIR PRICE</span> badge for recommended ethical market pricing.
-        </p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <div>
+          <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--dark-green); margin-bottom: 6px;">
+            🌾 Kerala Farm-Fresh Produce
+          </h1>
+          <p style="font-size: 0.95rem; color: var(--text-muted);">
+            Buy directly from verified local farmers. Look for the <span class="badge badge-fair-price">✓ FAIR PRICE</span> badge for recommended ethical market pricing.
+          </p>
+        </div>
+        <a href="/buyer/cart" class="btn btn-primary" style="white-space: nowrap;">
+          <span>🛒 Proceed to Cart & Billing →</span>
+        </a>
       </div>
 
       <!-- Filters Bar -->

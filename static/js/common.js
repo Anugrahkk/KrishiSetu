@@ -193,19 +193,21 @@ async function logoutUser() {
 // ---------------------------------------------------------------------------
 // 4. Cart Counter Badge
 // ---------------------------------------------------------------------------
-function updateCartBadge() {
-  const badges = document.querySelectorAll(".cart-counter");
-  const cart = getCartItems();
-  const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  badges.forEach((b) => {
-    b.textContent = totalCount;
-    b.style.display = totalCount > 0 ? "inline-block" : "none";
-  });
+function getCartStorageKey() {
+  const isBuyer = window.location.pathname.includes("buyer");
+  return isBuyer ? "krishi_buyer_cart" : "krishi_farmer_cart";
 }
 
 function getCartItems() {
   try {
-    const raw = localStorage.getItem("krishi_cart");
+    const key = getCartStorageKey();
+    let raw = localStorage.getItem(key);
+    if (!raw && localStorage.getItem("krishi_cart")) {
+      const legacy = JSON.parse(localStorage.getItem("krishi_cart"));
+      const isBuyer = window.location.pathname.includes("buyer");
+      const filtered = legacy.filter((item) => (isBuyer ? item.type === "produce" : item.type === "input"));
+      if (filtered.length > 0) return filtered;
+    }
     return raw ? JSON.parse(raw) : [];
   } catch (e) {
     return [];
@@ -213,8 +215,19 @@ function getCartItems() {
 }
 
 function saveCartItems(items) {
-  localStorage.setItem("krishi_cart", JSON.stringify(items));
+  const key = getCartStorageKey();
+  localStorage.setItem(key, JSON.stringify(items));
   updateCartBadge();
+}
+
+function updateCartBadge() {
+  const badges = document.querySelectorAll(".cart-counter");
+  const cart = getCartItems();
+  const totalCount = cart.reduce((sum, item) => sum + (parseInt(item.quantity) || 1), 0);
+  badges.forEach((b) => {
+    b.textContent = totalCount;
+    b.style.display = totalCount > 0 ? "inline-block" : "none";
+  });
 }
 
 // ---------------------------------------------------------------------------

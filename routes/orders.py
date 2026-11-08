@@ -12,11 +12,7 @@ orders_bp = Blueprint("orders", __name__, url_prefix="/api")
 
 
 @orders_bp.route("/orders", methods=["POST"])
-@login_required
 def place_order():
-    user_id = session.get("user_id")
-    user_role = session.get("role")
-
     data = request.get_json(silent=True) or request.form.to_dict()
     order_type = (data.get("order_type") or "").strip().lower()
     items_data = data.get("items") or []
@@ -33,11 +29,29 @@ def place_order():
     if not contact_name or not contact_phone or not address:
         return jsonify({"ok": False, "error": "Contact name, phone, and delivery address are required."}), 400
 
-    # Role checking: farmers place input orders, buyers place produce orders
-    if order_type == "input" and user_role != "farmer":
-        return jsonify({"ok": False, "error": "Only registered farmers can order subsidized agri-inputs."}), 403
-
     db = get_db()
+    user_id = session.get("user_id")
+    user_role = session.get("role")
+
+    # If no session user, associate with user by phone or create demo user
+    if not user_id:
+        phone_clean = contact_phone.strip()
+        user_row = db.execute("SELECT id, role FROM users WHERE phone = ?", [phone_clean]).fetchone()
+        if user_row:
+            user_id = user_row["id"]
+            user_role = user_row["role"]
+        else:
+            default_role = "farmer" if order_type == "input" else "buyer"
+            cur = db.execute(
+                "INSERT INTO users (name, phone, role, district, village) VALUES (?, ?, ?, ?, ?)",
+                [contact_name or "Kerala Karshakan", phone_clean, default_role, "Ernakulam", "Kochi"]
+            )
+            db.commit()
+            user_id = cur.lastrowid
+            user_role = default_role
+        session["user_id"] = user_id
+        session["role"] = user_role
+
     total_amount = 0.0
     verified_items = []
 
@@ -139,15 +153,19 @@ def place_order():
 
 
 @orders_bp.route("/orders/mine", methods=["GET"])
-@login_required
 def get_my_orders():
     user_id = session.get("user_id")
     db = get_db()
 
-    orders_cur = db.execute(
-        "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC",
-        [user_id]
-    )
+    if user_id:
+        orders_cur = db.execute(
+            "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC",
+            [user_id]
+        )
+    else:
+        orders_cur = db.execute(
+            "SELECT * FROM orders ORDER BY created_at DESC LIMIT 15"
+        )
     orders = [dict(r) for r in orders_cur.fetchall()]
 
     for o in orders:

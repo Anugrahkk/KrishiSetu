@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="/static/css/styles.css">
   <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg">
 </head>
+
 <body>
 
   <!-- Site Header -->
@@ -41,17 +43,22 @@
     <div class="container">
 
       <!-- Hero Banner -->
-      <section style="background: linear-gradient(135deg, #FAF8F2 0%, #E8F5E9 100%); border: 1px solid var(--card-border); border-radius: 18px; padding: 32px 20px; text-align: center; margin-bottom: 28px;">
+      <section
+        style="background: linear-gradient(135deg, #FAF8F2 0%, #E8F5E9 100%); border: 1px solid var(--card-border); border-radius: 18px; padding: 32px 20px; text-align: center; margin-bottom: 28px;">
         <span class="badge badge-govt" style="margin-bottom: 10px;">DIRECT FROM KERALA FARMERS</span>
         <h1 style="font-size: 2rem; font-weight: 800; color: var(--dark-green); margin-bottom: 8px;">
           Farm Fresh Harvests at Fair Prices
         </h1>
         <p style="font-size: 1rem; color: var(--text-muted); max-width: 580px; margin: 0 auto 20px;">
-          Zero middlemen markups. Freshly harvested fruits, vegetables, country eggs, and pure milk straight from local cultivators.
+          Zero middlemen markups. Freshly harvested fruits, vegetables, country eggs, and pure milk straight from local
+          cultivators.
         </p>
         <div style="max-width: 500px; margin: 0 auto; display: flex; gap: 8px;">
-          <input type="text" id="buyer-home-search" class="form-control" placeholder="Search bananas, fresh milk, country eggs..." onkeydown="if(event.key==='Enter') window.location.href='/buyer/produce?q='+encodeURIComponent(this.value)">
-          <button class="btn btn-primary" onclick="window.location.href='/buyer/produce?q='+encodeURIComponent(document.getElementById('buyer-home-search').value)">
+          <input type="text" id="buyer-home-search" class="form-control"
+            placeholder="Search bananas, fresh milk, country eggs..."
+            onkeydown="if(event.key==='Enter') window.location.href='/buyer/produce?q='+encodeURIComponent(this.value)">
+          <button class="btn btn-primary"
+            onclick="window.location.href='/buyer/produce?q='+encodeURIComponent(document.getElementById('buyer-home-search').value)">
             <span>Search</span>
           </button>
         </div>
@@ -145,5 +152,5 @@
   <script src="/static/js/cart.js"></script>
   <script src="/static/js/buyer.js"></script>
 </body>
-</html>
 
+</html>
