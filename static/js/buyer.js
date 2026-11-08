@@ -101,6 +101,7 @@ async function loadBuyerProduce() {
                 unit: '${item.unit}',
                 type: 'produce',
                 sellerName: '${farmerName.replace(/'/g, "\\'")}',
+                image: '${imgUrl}',
                 quantity: parseInt(document.getElementById('produce-qty-${item.id}').value) || 1
               })">
                 <span>🛒 Add</span>
@@ -112,6 +113,7 @@ async function loadBuyerProduce() {
                 unit: '${item.unit}',
                 type: 'produce',
                 sellerName: '${farmerName.replace(/'/g, "\\'")}',
+                image: '${imgUrl}',
                 quantity: parseInt(document.getElementById('produce-qty-${item.id}').value) || 1
               })">
                 <span>⚡ Buy Now →</span>
@@ -126,12 +128,18 @@ async function loadBuyerProduce() {
 
 function getSampleProduce() {
   return [
-    { id: 1, name: "Organic Nendran Bananas", category: "fruit", price: 52, unit: "kg", quantity: 80, district: "Ernakulam", village: "Aluva", fair_price: true, farmer_name: "Rajan Pillai", description: "Naturally ripened traditional Kerala Nendran bananas." },
-    { id: 2, name: "Fresh Country Eggs (നാടൻ കോഴിമുട്ട)", category: "egg", price: 8, unit: "piece", quantity: 150, district: "Thrissur", village: "Ollur", fair_price: true, farmer_name: "Mariamma Joseph", description: "Free-range country hen eggs high in protein." },
-    { id: 3, name: "Pure Farm Fresh Cow Milk", category: "milk", price: 54, unit: "litre", quantity: 40, district: "Kottayam", village: "Pala", fair_price: true, farmer_name: "Manoj Kumar", description: "Raw unadulterated cow milk fresh from morning milking." },
-    { id: 4, name: "Green Chillies (പച്ചമുളക്)", category: "vegetable", price: 45, unit: "kg", quantity: 30, district: "Idukki", village: "Thodupuzha", fair_price: true, farmer_name: "Biju Varghese", description: "Spicy pungent green chillies grown without synthetic chemicals." },
-    { id: 5, name: "Tapioca / Cassava (കപ്പ)", category: "crop", price: 25, unit: "kg", quantity: 200, district: "Ernakulam", village: "Perumbavoor", fair_price: true, farmer_name: "Eldho Paul", description: "Freshly dug buttery soft cooking tapioca." },
-    { id: 6, name: "Organic Malabar Black Pepper", category: "other", price: 550, unit: "kg", quantity: 25, district: "Idukki", village: "Nedumkandam", fair_price: true, farmer_name: "Sunny Thomas", description: "Sun-dried grade 1 tellicherry black pepper garbled." }
+    { id: 1, name: "Organic Nendran Bananas (നേന്ത്രപ്പഴം)", category: "fruit", price: 52, unit: "kg", quantity: 120, district: "Ernakulam", village: "Aluva", fair_price: true, farmer_name: "Rajan Pillai", image: "../../static/img/produce-banana.svg", description: "Naturally ripened traditional Kerala Nendran bananas directly from farm." },
+    { id: 2, name: "Fresh Country Eggs (നാടൻ കോഴിമുട്ട)", category: "egg", price: 8, unit: "piece", quantity: 200, district: "Thrissur", village: "Ollur", fair_price: true, farmer_name: "Mariamma Joseph", image: "../../static/img/produce-egg.svg", description: "Free-range country hen eggs high in protein and natural carotenoids." },
+    { id: 3, name: "Pure Farm Fresh Cow Milk (പശുവിൻ പാൽ)", category: "milk", price: 54, unit: "litre", quantity: 60, district: "Kottayam", village: "Pala", fair_price: true, farmer_name: "Manoj Kumar", image: "../../static/img/produce-milk.svg", description: "Raw unadulterated cow milk fresh from morning milking at local dairy farm." },
+    { id: 4, name: "Spicy Green Chillies (പച്ചമുളക്)", category: "vegetable", price: 45, unit: "kg", quantity: 45, district: "Idukki", village: "Thodupuzha", fair_price: true, farmer_name: "Biju Varghese", image: "../../static/img/produce-chilli.svg", description: "Hot, pungent green chillies grown naturally without synthetic insecticides." },
+    { id: 5, name: "Fresh Tapioca / Cassava (കപ്പ)", category: "crop", price: 25, unit: "kg", quantity: 300, district: "Ernakulam", village: "Perumbavoor", fair_price: true, farmer_name: "Eldho Paul", image: "../../static/img/produce-tapioca.svg", description: "Freshly harvested buttery soft boiling Kerala kappa tubers." },
+    { id: 6, name: "Organic Malabar Black Pepper (കുരുമുളക്)", category: "other", price: 550, unit: "kg", quantity: 35, district: "Idukki", village: "Nedumkandam", fair_price: true, farmer_name: "Sunny Thomas", image: "../../static/img/produce-pepper.svg", description: "Sun-dried grade 1 Tellicherry black pepper garbled with bold aroma." },
+    { id: 7, name: "Fresh Tender & Husked Coconut (തേങ്ങ)", category: "fruit", price: 38, unit: "piece", quantity: 180, district: "Thrissur", village: "Chalakudy", fair_price: true, farmer_name: "Sasi Nair", image: "../../static/img/produce-coconut.svg", description: "Sweet water tender coconuts and mature rich oil-grade coconuts." },
+    { id: 8, name: "Farm Fresh Wild Ginger (ഇഞ്ചി)", category: "vegetable", price: 120, unit: "kg", quantity: 40, district: "Wayanad", village: "Sulthan Bathery", fair_price: true, farmer_name: "Varkey Chacko", image: "../../static/img/produce-ginger.svg", description: "Aromatic native ginger rhizomes freshly pulled from hill soils." },
+    { id: 9, name: "Highland Green Cardamom (ഏലക്ക)", category: "other", price: 1800, unit: "kg", quantity: 15, district: "Idukki", village: "Kumily", fair_price: true, farmer_name: "Kurian Joseph", image: "../../static/img/produce-cardamom.svg", description: "Extra-bold 8mm green cardamom pods dried in traditional firewood kilns." },
+    { id: 10, name: "Elephant Foot Yam (നാടൻ ചേന)", category: "crop", price: 42, unit: "kg", quantity: 150, district: "Ernakulam", village: "Muvattupuzha", fair_price: true, farmer_name: "Gopalakrishnan", image: "../../static/img/produce-yam.svg", description: "Rich, non-itchy traditional native yam for authentic Kerala curries." },
+    { id: 11, name: "Farm Bitter Gourd (പാവയ്ക്ക)", category: "vegetable", price: 48, unit: "kg", quantity: 50, district: "Alappuzha", village: "Kayamkulam", fair_price: true, farmer_name: "Shaji K.", image: "../../static/img/produce-gourd.svg", description: "Crisp green bitter gourds cultivated on bio-fencing trellis." },
+    { id: 12, name: "Vine-Ripened Country Tomatoes (നാടൻ തക്കാളി)", category: "vegetable", price: 38, unit: "kg", quantity: 90, district: "Palakkad", village: "Chittur", fair_price: true, farmer_name: "Murugan P.", image: "../../static/img/produce-tomato.svg", description: "Juicy, naturally ripened country red tomatoes freshly handpicked." }
   ];
 }
 

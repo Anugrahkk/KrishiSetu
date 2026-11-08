@@ -111,6 +111,16 @@ while ($listener.IsListening) {
             continue
         }
 
+        if ($path -eq "/api/scans/mine") {
+            $json = '{"ok": true, "scans": []}'
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($json)
+            $response.ContentType = "application/json"
+            $response.StatusCode = 200
+            $response.OutputStream.Write($bytes, 0, $bytes.Length)
+            $response.Close()
+            continue
+        }
+
         $targetFile = $null
 
         if ($pageRoutes.ContainsKey($path)) {

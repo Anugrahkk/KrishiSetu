@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#EBF5FB" rx="16"/>
+  <!-- Bottle Shape -->
+  <path d="M85 35 L115 35 L115 50 Q 130 65 130 90 L130 155 Q 130 165 120 165 L80 165 Q 70 165 70 155 L70 90 Q 70 65 85 50 Z" fill="#FFFFFF" stroke="#2980B9" stroke-width="2.5"/>
+  <!-- Cap -->
+  <rect x="80" y="25" width="40" height="12" rx="4" fill="#2980B9"/>
+  <!-- Milk Liquid Level -->
+  <path d="M72 85 Q 100 80 128 85 L128 155 Q 128 163 120 163 L80 163 Q 72 163 72 155 Z" fill="#F4F6F6"/>
+  <!-- Label on Bottle -->
+  <rect x="76" y="98" width="48" height="42" rx="4" fill="#D4E6F1" stroke="#3498DB" stroke-width="1.5"/>
+  <circle cx="100" cy="112" r="8" fill="#2E7D32"/>
+  <text x="100" y="115" text-anchor="middle" font-size="10" fill="#FFF">🐄</text>
+  <text x="100" y="132" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="7" font-weight="700" fill="#1B4F72">PURE MILK</text>
+  <!-- Droplet -->
+  <path d="M145 120 C 145 130, 155 135, 155 125 C 155 115, 145 110, 145 120 Z" fill="#3498DB" opacity="0.4"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1B4F72">FARM FRESH MILK</text>
+</svg>
+

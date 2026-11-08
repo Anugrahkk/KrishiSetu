@@ -1252,6 +1252,13 @@ button, input, select, textarea {
   color: var(--text-dark);
 }
 
+.vet-qualifications {
+  font-size: 0.82rem;
+  color: var(--primary-green);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
 .vet-clinic {
   font-size: 0.9rem;
   color: var(--soil-brown);
@@ -1268,10 +1275,42 @@ button, input, select, textarea {
   gap: 6px;
 }
 
+.vet-service-tag {
+  background-color: #E8F5E9;
+  color: #1B5E20;
+  border: 1px solid #C8E6C9;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .vet-actions {
   margin-top: 16px;
   display: flex;
   gap: 10px;
+}
+
+.btn-whatsapp {
+  background-color: #25D366 !important;
+  color: #FFFFFF !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 2px 6px rgba(37, 211, 102, 0.25);
+}
+
+.btn-whatsapp:hover {
+  background-color: #1EBE5D !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.35);
 }
 
 /* --------------------------------------------------------------------------
@@ -1312,6 +1351,67 @@ button, input, select, textarea {
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.cart-item-thumb-col {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1.5px solid var(--card-border);
+  background: var(--bg-cream);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.cart-item-card:hover .cart-item-thumb {
+  transform: scale(1.04);
+}
+
+.quick-add-preview-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.quick-add-preview-thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1.5px solid var(--card-border);
+  background: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.quick-add-preview-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.quick-add-preview-name {
+  font-weight: 700;
+  color: var(--dark-green);
+  font-size: 0.95rem;
+}
+
+.quick-add-preview-calc {
+  font-size: 0.88rem;
+  color: var(--text-dark);
+}
+
+.quick-add-preview-calc strong {
+  color: var(--primary-green);
+  font-size: 1.05rem;
+  font-family: var(--font-mono);
 }
 
 .cart-item-info {

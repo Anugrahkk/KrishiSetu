@@ -347,34 +347,227 @@ async function loadVets() {
     return;
   }
 
-  grid.innerHTML = filtered.map((v) => `
-    <div class="vet-card">
-      <div class="vet-header">
-        <div>
-          <h3 class="vet-name">${v.name}</h3>
-          <div class="vet-clinic">🏥 ${v.clinic}</div>
+  grid.innerHTML = filtered.map((v) => {
+    const services = Array.isArray(v.services) ? v.services : [
+      "Artificial Insemination (AI)",
+      "Routine Vaccination & Deworming",
+      "Emergency Livestock Care",
+      "Disease Screening"
+    ];
+
+    const isEmergency = (v.timings || "").toLowerCase().includes("24-hour") || (v.timings || "").toLowerCase().includes("24x7") || (v.availability || "").includes("24x7");
+    const availClass = isEmergency ? "badge-private" : "badge-coop";
+    const availText = v.availability || (isEmergency ? "🚨 24x7 Emergency On-Call" : "🟢 Available Today");
+    const cleanPhone = (v.phone || "").replace(/[^0-9+]/g, "");
+    const waPhone = cleanPhone.replace(/^\+/, "");
+    const waText = encodeURIComponent(`Namaskaram Dr. ${v.name}, I am a farmer contacting you via KrishiSetu for veterinary medical guidance.`);
+
+    return `
+      <div class="vet-card">
+        <div class="vet-header">
+          <div>
+            <h3 class="vet-name">${v.name}</h3>
+            <div class="vet-qualifications">${v.qualifications || "BVSc & AH • Kerala Veterinary University"}</div>
+            <div class="vet-clinic">🏥 ${v.clinic}</div>
+          </div>
+          <span class="badge badge-govt">${v.specialty.toUpperCase()}</span>
         </div>
-        <span class="badge badge-govt">${v.specialty.toUpperCase()}</span>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+          <span class="badge ${availClass}" style="font-size: 0.75rem;">${availText}</span>
+          <span class="badge badge-fair-price" style="font-size: 0.75rem;">${v.fee || "FREE (Govt Subsidized)"}</span>
+        </div>
+
+        <div class="vet-info-line">📍 <strong>${v.district}</strong> • ${v.address || "District Veterinary Centre"}</div>
+        <div class="vet-info-line">⏰ <strong>Hours:</strong> ${v.timings || "8:30 AM - 2:30 PM"}</div>
+        <div class="vet-info-line" style="color: var(--soil-brown);">👨‍⚕️ <strong>Role:</strong> ${v.designation || "Senior Veterinary Surgeon"}</div>
+
+        <div style="margin: 10px 0 8px;">
+          <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Key Clinical Services:</span>
+          <div class="vet-services-list" style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;">
+            ${services.map((s) => `<span class="vet-service-tag">${s}</span>`).join("")}
+          </div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-dark); background: var(--bg-cream); padding: 8px 10px; border-radius: 8px; border-left: 3px solid var(--primary-green); margin: 6px 0 14px;">
+          💡 <em>"${v.notes || "Emergency & routine livestock healthcare consultation."}"</em>
+        </p>
+
+        <div class="vet-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <a href="tel:${cleanPhone}" class="btn btn-primary" style="padding: 10px 8px; font-size: 0.85rem; text-align: center; justify-content: center;">
+            <span>📞 Call</span>
+          </a>
+          <a href="https://wa.me/${waPhone}?text=${waText}" target="_blank" rel="noopener" class="btn btn-whatsapp" style="padding: 10px 8px; font-size: 0.85rem; text-align: center; justify-content: center; background: #25D366; color: #FFF; border: none; font-weight: 700;">
+            <span>💬 WhatsApp</span>
+          </a>
+        </div>
       </div>
-      <div class="vet-info-line">📍 ${v.district} • ${v.address || "District Veterinary Centre"}</div>
-      <div class="vet-info-line">⏰ ${v.timings || "9:00 AM - 4:00 PM"}</div>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">${v.notes || "Emergency & routine livestock care."}</p>
-      <div class="vet-actions">
-        <a href="tel:${v.phone}" class="btn btn-primary btn-block">
-          <span>📞 Call ${v.phone}</span>
-        </a>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function getSampleVets() {
   return [
-    { id: 1, name: "Dr. K. R. Suresh Kumar", clinic: "Govt Veterinary Hospital Aluva", specialty: "dairy", phone: "+919400000001", district: "Ernakulam", address: "Near Mini Civil Station, Aluva", timings: "9:00 AM - 3:00 PM", notes: "Expertise in crossbred dairy cattle and mastitis management." },
-    { id: 2, name: "Dr. Deepa Nair", clinic: "Poultry Disease Diagnostic Lab", specialty: "poultry", phone: "+919400000002", district: "Ernakulam", address: "Vyttila, Kochi", timings: "8:30 AM - 2:00 PM", notes: "Specialized in broiler and layer vaccination schedules." },
-    { id: 3, name: "Dr. Thomas Mathew", clinic: "Kottayam District Vet Centre", specialty: "general", phone: "+919400000003", district: "Kottayam", address: "Nagampadam, Kottayam", timings: "9:00 AM - 4:00 PM", notes: "Complete farm animal surgery and consultation." },
-    { id: 4, name: "Dr. Fathima Beevi", clinic: "Veterinary Dispensary Munnar", specialty: "goat", phone: "+919400000004", district: "Idukki", address: "Devikulam Road, Munnar", timings: "9:30 AM - 1:30 PM", notes: "Highland goat breeds and parasitic control." },
-    { id: 5, name: "Dr. Rajesh V.", clinic: "Thrissur Veterinary Polyclinic", specialty: "dairy", phone: "+919400000005", district: "Thrissur", address: "Round East, Thrissur", timings: "24-Hour Emergency Service", notes: "Round the clock emergency obstetric care for cattle." }
+    {
+      id: 1,
+      name: "Dr. K. R. Suresh Kumar",
+      qualifications: "BVSc & AH, MVSc (Dairy Cattle & Reproduction)",
+      designation: "Senior Veterinary Surgeon (16+ yrs experience)",
+      clinic: "Govt Veterinary Hospital & AI Centre Aluva",
+      specialty: "dairy",
+      phone: "+919400000001",
+      district: "Ernakulam",
+      address: "Near Mini Civil Station, Aluva - 683101",
+      timings: "8:30 AM - 2:30 PM (Emergency on-call)",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Artificial Insemination (AI)", "Mastitis Screening", "Cattle Pregnancy Diagnosis", "Mineral Deficiency Care"],
+      notes: "Expertise in crossbred Jersey/HF cattle, milk fever management, and synchronized breeding."
+    },
+    {
+      id: 2,
+      name: "Dr. Deepa Nair",
+      qualifications: "BVSc & AH, PG Dip (Poultry Health & Pathology)",
+      designation: "Avian Health Specialist & Veterinary Officer",
+      clinic: "State Poultry Disease Diagnostic Laboratory",
+      specialty: "poultry",
+      phone: "+919400000002",
+      district: "Ernakulam",
+      address: "Near Vyttila Mobility Hub, Kochi - 682019",
+      timings: "8:30 AM - 2:00 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Broiler & Layer Vaccination", "Ranikhet (ND) Screening", "Biosecurity Auditing", "Duck Plague Control"],
+      notes: "Dedicated diagnostic lab for commercial and backyard poultry disease isolation and vaccination schedules."
+    },
+    {
+      id: 3,
+      name: "Dr. Rajesh Varghese",
+      qualifications: "BVSc & AH, MVSc (Veterinary Surgery & Radiology)",
+      designation: "Chief Veterinary Consultant & Obstetrician",
+      clinic: "Thrissur District Veterinary Hospital & Polyclinic",
+      specialty: "dairy",
+      phone: "+919400000005",
+      district: "Thrissur",
+      address: "Swaraj Round East, Thrissur - 680001",
+      timings: "24-Hour Emergency Service",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🚨 24x7 Emergency Service",
+      services: ["24/7 Emergency C-Section", "Dystocia Cattle Delivery", "Ultrasound Sonography", "Fracture Pinning"],
+      notes: "Round-the-clock emergency surgical care for critical cattle delivery, dystocia, and trauma cases."
+    },
+    {
+      id: 4,
+      name: "Dr. Fathima Beevi",
+      qualifications: "BVSc & AH (Goat & Sheep Specialist)",
+      designation: "Assistant Director of Animal Husbandry",
+      clinic: "Highland Veterinary Dispensary & Goat Breeding Centre",
+      specialty: "goat",
+      phone: "+919400000004",
+      district: "Idukki",
+      address: "Devikulam Road, Munnar - 685612",
+      timings: "9:00 AM - 2:00 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Malabari & Boer Goat Breeding", "Enterotoxemia (ET) Vaccine", "PPR Disease Prevention", "Deworming Protocol"],
+      notes: "Specialized in high-altitude goat farming, internal parasite eradication, and reproductive management."
+    },
+    {
+      id: 5,
+      name: "Dr. Thomas Mathew",
+      qualifications: "BVSc & AH, MVSc (Animal Nutrition & Preventive Medicine)",
+      designation: "Senior Veterinary Surgeon & Feed Consultant",
+      clinic: "Kottayam District Veterinary Centre",
+      specialty: "general",
+      phone: "+919400000003",
+      district: "Kottayam",
+      address: "Nagampadam, Kottayam - 686001",
+      timings: "9:00 AM - 4:00 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Balanced Ration Formulation", "Silage Making Advisory", "Downer Cow Management", "Foot & Mouth (FMD) Vaccine"],
+      notes: "Complete farm animal surgery, preventive vaccination calendars, and high-yield feeding solutions."
+    },
+    {
+      id: 6,
+      name: "Dr. Biju Narayanan",
+      qualifications: "BVSc & AH, MVSc (Livestock Medicine)",
+      designation: "Veterinary Officer & Dairy Farm Consultant",
+      clinic: "Govt Veterinary Dispensary Palakkad",
+      specialty: "dairy",
+      phone: "+919400000006",
+      district: "Palakkad",
+      address: "Fort Maidan Road, Palakkad - 678001",
+      timings: "8:30 AM - 2:30 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Heat Synchronization", "Buffalo Artificial Insemination", "Theileriosis Blood Smear Test", "Deworming"],
+      notes: "Extensive experience in high-temperature dairy shelter cooling, tick-borne parasite control, and buffalo management."
+    },
+    {
+      id: 7,
+      name: "Dr. Anjali Menon",
+      qualifications: "BVSc & AH (Duck & Waterfowl Specialist)",
+      designation: "Regional Poultry Health Officer",
+      clinic: "Kuttanad Duck Research & Veterinary Dispensary",
+      specialty: "poultry",
+      phone: "+919400000007",
+      district: "Alappuzha",
+      address: "Mankombu, Kuttanad, Alappuzha - 688502",
+      timings: "9:00 AM - 2:00 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Kuttanad Chara-Chemballi Care", "Duck Viral Enteritis Vaccine", "Pasteurellosis Treatment", "Waterborne Toxin Screening"],
+      notes: "Specialized in wetland duck flocks, viral enteritis prophylaxis, and seasonal migratory disease prevention."
+    },
+    {
+      id: 8,
+      name: "Dr. Jacob Kuruvilla",
+      qualifications: "BVSc & AH, MVSc (Epidemiology)",
+      designation: "District Animal Disease Surveillance Officer",
+      clinic: "Wayanad High-Altitude Veterinary Centre",
+      specialty: "general",
+      phone: "+919400000008",
+      district: "Wayanad",
+      address: "Mananthavady Road, Kalpetta - 673121",
+      timings: "9:00 AM - 3:30 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Highland Cattle Acclimatization", "Tick-borne Disease Protocol", "Leptospirosis Screening", "Livestock Insurance Certification"],
+      notes: "Expertise in hill-tract livestock management, wild animal conflict injuries, and cattle health certification."
+    },
+    {
+      id: 9,
+      name: "Dr. Meera Krishnan",
+      qualifications: "BVSc & AH, MVSc (Clinical Medicine)",
+      designation: "Senior Veterinary Consultant",
+      clinic: "State Central Veterinary Hospital",
+      specialty: "general",
+      phone: "+919400000009",
+      district: "Thiruvananthapuram",
+      address: "PMG Junction, Vikas Bhavan, Thiruvananthapuram - 695033",
+      timings: "8:00 AM - 4:00 PM (Emergency Night Care)",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Digital X-Ray Diagnostics", "Endometritis Therapy", "Bovine Brucellosis Serology", "Calf Pneumonia Management"],
+      notes: "Advanced referral facility equipped with digital imaging, blood gas analyzer, and critical calf care unit."
+    },
+    {
+      id: 10,
+      name: "Dr. Vinod Kumar",
+      qualifications: "BVSc & AH (Dairy & Mixed Livestock)",
+      designation: "Veterinary Surgeon & Milk Society Officer",
+      clinic: "Co-operative Dairy Cattle Clinic Wadakkanchery",
+      specialty: "dairy",
+      phone: "+919400000010",
+      district: "Thrissur",
+      address: "Wadakkanchery, Thrissur - 680582",
+      timings: "8:00 AM - 1:30 PM",
+      fee: "FREE (Govt Subsidized)",
+      availability: "🟢 Available Today",
+      services: ["Sub-clinical Mastitis Detection", "High-yielding HF/Jersey Nutrition", "Dehorning & Hoof Trimming", "Milk Yield Booster Advisory"],
+      notes: "Dedicated cooperative clinic working closely with Milma dairy farmers for milk quality and herd fertility improvement."
+    }
   ];
 }
 

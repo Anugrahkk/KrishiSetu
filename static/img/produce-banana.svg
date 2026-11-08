@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#FEF9E7" rx="16"/>
+  <!-- Bunch of Bananas -->
+  <path d="M45 135 C 55 70, 130 50, 160 85 C 135 110, 75 145, 45 135 Z" fill="#F4D03F" stroke="#D4AC0D" stroke-width="2.5"/>
+  <path d="M50 145 C 65 85, 140 65, 165 105 C 140 128, 80 155, 50 145 Z" fill="#F5B041" stroke="#D68910" stroke-width="2.5"/>
+  <path d="M60 155 C 75 100, 145 80, 170 120 C 145 140, 90 165, 60 155 Z" fill="#F7DC6F" stroke="#D4AC0D" stroke-width="2.5"/>
+  <!-- Crown / Stem -->
+  <path d="M40 130 C 35 145, 48 160, 58 152 C 55 142, 48 135, 40 130 Z" fill="#5D4037" stroke="#3E2723" stroke-width="2"/>
+  <!-- Green Tips -->
+  <circle cx="163" cy="88" r="6" fill="#689F38"/>
+  <circle cx="168" cy="108" r="6" fill="#689F38"/>
+  <circle cx="173" cy="123" r="6" fill="#689F38"/>
+  <!-- Highlights -->
+  <path d="M70 100 C 95 85, 130 82, 145 92" stroke="#FFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#7D6608">NENDRAN BANANA</text>
+</svg>
+

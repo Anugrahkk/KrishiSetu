@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#E8F5E9" rx="16"/>
+  <!-- Seed Packet -->
+  <rect x="50" y="45" width="100" height="120" rx="8" fill="#81C784" stroke="#2E7D32" stroke-width="2.5"/>
+  <rect x="58" y="55" width="84" height="60" rx="4" fill="#FFFFFF"/>
+  <circle cx="100" cy="85" r="20" fill="#C8E6C9"/>
+  <path d="M100 70 C 85 85, 85 98, 100 102 C 115 98, 115 85, 100 70 Z" fill="#2E7D32"/>
+  <text x="100" y="135" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="9" font-weight="800" fill="#1B5E20">CERTIFIED SEEDS</text>
+  <text x="100" y="152" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="7.5" fill="#33691E">Govt Certified 98% Germ</text>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#1B5E20">PADDY & VEG SEEDS</text>
+</svg>
+

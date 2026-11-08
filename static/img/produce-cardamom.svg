@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#E8F8F5" rx="16"/>
+  <!-- Cardamom Pod 1 -->
+  <path d="M70 70 C 50 95, 60 135, 90 140 C 110 135, 115 95, 85 70 Z" fill="#58D68D" stroke="#229954" stroke-width="2.5"/>
+  <path d="M85 70 Q 82 105 90 140" stroke="#1E8449" stroke-width="2" fill="none"/>
+  <!-- Cardamom Pod 2 -->
+  <path d="M105 60 C 90 85, 105 125, 135 130 C 150 120, 150 85, 120 60 Z" fill="#82E0AA" stroke="#229954" stroke-width="2.5"/>
+  <path d="M118 60 Q 120 95 133 130" stroke="#1E8449" stroke-width="2" fill="none"/>
+  <!-- Black Seeds inside Pod 3 (open) -->
+  <ellipse cx="110" cy="140" rx="20" ry="15" fill="#4E342E" stroke="#3E2723" stroke-width="1.5"/>
+  <circle cx="104" cy="138" r="3" fill="#212121"/>
+  <circle cx="112" cy="136" r="3.5" fill="#212121"/>
+  <circle cx="116" cy="142" r="3" fill="#212121"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#145A32">GREEN CARDAMOM</text>
+</svg>
+

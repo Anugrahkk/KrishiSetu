@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#F5EEF8" rx="16"/>
+  <!-- Elephant Foot Yam Tuber -->
+  <path d="M50 115 C 40 145, 70 165, 100 165 C 135 165, 160 145, 155 110 C 150 75, 125 65, 95 65 C 65 65, 55 90, 50 115 Z" fill="#6E2C00" stroke="#4A235A" stroke-width="2.5"/>
+  <!-- Rough skin texture & knobs -->
+  <circle cx="75" cy="100" r="6" fill="#873600"/>
+  <circle cx="115" cy="95" r="7" fill="#873600"/>
+  <circle cx="95" cy="125" r="8" fill="#873600"/>
+  <circle cx="135" cy="120" r="5" fill="#873600"/>
+  <circle cx="70" cy="135" r="5" fill="#873600"/>
+  <!-- Cut slice with pinkish-cream flesh -->
+  <ellipse cx="125" cy="90" rx="20" ry="24" transform="rotate(20 125 90)" fill="#FADBD8" stroke="#E74C3C" stroke-width="2"/>
+  <ellipse cx="125" cy="90" rx="14" ry="18" transform="rotate(20 125 90)" fill="#FDEDEC"/>
+  <!-- Young sprout on top -->
+  <path d="M92 65 Q 90 45 80 40 Q 95 48 97 65" fill="#2ECC71"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#4A235A">YAM (CHENA)</text>
+</svg>
+

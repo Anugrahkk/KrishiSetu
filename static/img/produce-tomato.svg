@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#FDEDEC" rx="16"/>
+  <!-- Tomato Body -->
+  <circle cx="100" cy="115" r="48" fill="#E74C3C" stroke="#C0392B" stroke-width="2.5"/>
+  <ellipse cx="85" cy="95" rx="12" ry="6" fill="#F1948A" opacity="0.6"/>
+  <!-- Green Calyx / Sepals -->
+  <path d="M100 68 L108 55 L102 68 L116 64 L104 72 L112 80 L98 74 L92 82 L96 72 L82 66 L96 68 Z" fill="#27AE60" stroke="#1E8449" stroke-width="1.5"/>
+  <!-- Green Stem -->
+  <path d="M100 65 Q 98 48 108 42" stroke="#1E8449" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#922B21">FARM TOMATOES</text>
+</svg>
+

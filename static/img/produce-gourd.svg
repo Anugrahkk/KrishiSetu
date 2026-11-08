@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#E8F8F5" rx="16"/>
+  <!-- Bitter Gourd / Pavakka body -->
+  <path d="M40 145 C 70 85, 120 75, 165 60 C 150 95, 110 135, 55 155 Z" fill="#229954" stroke="#145A32" stroke-width="2.5"/>
+  <!-- Ridges & Spiky tubercles -->
+  <path d="M55 135 Q 90 95 145 75" stroke="#52BE80" stroke-width="3" fill="none"/>
+  <path d="M65 145 Q 105 110 155 85" stroke="#1E8449" stroke-width="2" fill="none"/>
+  <!-- Stem -->
+  <path d="M165 60 Q 180 50 185 35" stroke="#196F3D" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Tendril -->
+  <path d="M175 52 Q 185 62 175 70" stroke="#27AE60" stroke-width="2" fill="none"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#145A32">BITTER GOURD (PAVAKKA)</text>
+</svg>
+

@@ -45,14 +45,42 @@ function saveCartItems(items) {
 // ---------------------------------------------------------------------------
 // 2. Add, Update & Remove Cart Items
 // ---------------------------------------------------------------------------
+function getProduceThumb(name = "", type = "produce") {
+  const n = (name || "").toLowerCase();
+  if (type === "input") {
+    if (n.includes("vermi") || n.includes("compost") || n.includes("manure")) return "../../static/img/input-vermicompost.svg";
+    if (n.includes("seed") || n.includes("paddy") || n.includes("cowpea")) return "../../static/img/input-seeds.svg";
+    if (n.includes("neem")) return "../../static/img/input-neem.svg";
+    if (n.includes("factomphos") || n.includes("potash") || n.includes("mop") || n.includes("fertilizer") || n.includes("urea")) return "../../static/img/input-fertilizer.svg";
+    return "../../static/img/input-vermicompost.svg";
+  }
+
+  // Produce crops
+  if (n.includes("banana") || n.includes("nendran") || n.includes("robusta") || n.includes("പഴം")) return "../../static/img/produce-banana.svg";
+  if (n.includes("egg") || n.includes("മുട്ട")) return "../../static/img/produce-egg.svg";
+  if (n.includes("milk") || n.includes("പാൽ") || n.includes("dairy")) return "../../static/img/produce-milk.svg";
+  if (n.includes("chilli") || n.includes("chilly") || n.includes("മുളക്")) return "../../static/img/produce-chilli.svg";
+  if (n.includes("tapioca") || n.includes("cassava") || n.includes("കപ്പ") || n.includes("kappa")) return "../../static/img/produce-tapioca.svg";
+  if (n.includes("pepper") || n.includes("കുരുമുളക്")) return "../../static/img/produce-pepper.svg";
+  if (n.includes("coconut") || n.includes("തേങ്ങ") || n.includes("tender")) return "../../static/img/produce-coconut.svg";
+  if (n.includes("ginger") || n.includes("ഇഞ്ചി")) return "../../static/img/produce-ginger.svg";
+  if (n.includes("cardamom") || n.includes("ഏലക്ക")) return "../../static/img/produce-cardamom.svg";
+  if (n.includes("yam") || n.includes("chena") || n.includes("ചേന")) return "../../static/img/produce-yam.svg";
+  if (n.includes("gourd") || n.includes("pavakka") || n.includes("പാവയ്ക്ക")) return "../../static/img/produce-gourd.svg";
+  if (n.includes("tomato") || n.includes("തക്കാളി")) return "../../static/img/produce-tomato.svg";
+  return "../../static/img/placeholder.svg";
+}
+
 function addItemToCart(item, showFeedback = true) {
-  // item: { id, name, price, unit, type ('input' | 'produce'), sellerName, quantity }
+  // item: { id, name, price, unit, type ('input' | 'produce'), sellerName, image, quantity }
   const cart = getCartItems();
   const existing = cart.find((i) => i.id === item.id && i.type === item.type);
   const addQty = Math.max(1, parseInt(item.quantity) || 1);
+  const thumbUrl = item.image || getProduceThumb(item.name, item.type);
 
   if (existing) {
     existing.quantity = (existing.quantity || 1) + addQty;
+    if (!existing.image) existing.image = thumbUrl;
   } else {
     cart.push({
       id: item.id,
@@ -61,6 +89,7 @@ function addItemToCart(item, showFeedback = true) {
       unit: item.unit || "unit",
       type: item.type || (window.location.pathname.includes("buyer") ? "produce" : "input"),
       sellerName: item.sellerName || "Kerala Direct Seller",
+      image: thumbUrl,
       quantity: addQty
     });
   }
@@ -179,13 +208,18 @@ function renderCartView() {
 
     const badgeClass = item.type === "input" ? "badge-govt" : "badge-coop";
     const badgeText = item.type === "input" ? "GOVT INPUT" : "FRESH HARVEST";
+    const imgUrl = item.image || getProduceThumb(item.name, item.type);
 
     return `
       <div class="cart-item-card">
+        <div class="cart-item-thumb-col">
+          <img src="${imgUrl}" alt="${item.name}" class="cart-item-thumb" onerror="this.src='../../static/img/placeholder.svg'">
+        </div>
+
         <div class="cart-item-info">
           <span class="badge ${badgeClass}">${badgeText}</span>
           <h3 class="cart-item-name">${item.name}</h3>
-          <div class="cart-item-seller">🏛️ ${item.sellerName}</div>
+          <div class="cart-item-seller">🧑‍🌾 ${item.sellerName}</div>
           <div class="cart-item-unit-rate">Rate: ₹${item.price.toFixed(2)} / ${item.unit}</div>
         </div>
 
@@ -228,20 +262,26 @@ function renderCartView() {
 // ---------------------------------------------------------------------------
 const QUICK_CATALOG = {
   farmer: [
-    { id: 1, name: "Vermicompost (Organic)", price: 18, unit: "kg", sellerName: "Krishibhavan Aluva", type: "input" },
-    { id: 2, name: "High-Yield Cowpea Seeds (Anaswara)", price: 45, unit: "packet", sellerName: "Krishibhavan Nedumbassery", type: "input" },
-    { id: 3, name: "Neem Cake Powder (Bio-pesticide)", price: 35, unit: "kg", sellerName: "Karshika Sahakarana Sangham", type: "input" },
-    { id: 4, name: "Factomphos 20:20:0:13", price: 28, unit: "kg", sellerName: "Kisan Agro Cooperative", type: "input" },
-    { id: 5, name: "Paddy Seeds (Uma MO-16)", price: 40, unit: "kg", sellerName: "Krishibhavan Palakkad", type: "input" },
-    { id: 6, name: "Muriate of Potash (MOP)", price: 32, unit: "kg", sellerName: "Green Kerala Agro Store", type: "input" }
+    { id: 1, name: "Vermicompost (Organic Bio-Manure)", price: 18, unit: "kg", sellerName: "Krishibhavan Aluva", type: "input", image: "../../static/img/input-vermicompost.svg" },
+    { id: 2, name: "High-Yield Cowpea Seeds (Anaswara)", price: 45, unit: "packet", sellerName: "Krishibhavan Nedumbassery", type: "input", image: "../../static/img/input-seeds.svg" },
+    { id: 3, name: "Neem Cake Powder (Bio-Pesticide)", price: 35, unit: "kg", sellerName: "Karshika Sahakarana Sangham", type: "input", image: "../../static/img/input-neem.svg" },
+    { id: 4, name: "Factomphos 20:20:0:13 Complex", price: 28, unit: "kg", sellerName: "Kisan Agro Cooperative", type: "input", image: "../../static/img/input-fertilizer.svg" },
+    { id: 5, name: "Certified Paddy Seeds (Uma MO-16)", price: 40, unit: "kg", sellerName: "Krishibhavan Palakkad", type: "input", image: "../../static/img/input-seeds.svg" },
+    { id: 6, name: "Muriate of Potash (MOP)", price: 32, unit: "kg", sellerName: "Green Kerala Agro Store", type: "input", image: "../../static/img/input-fertilizer.svg" }
   ],
   buyer: [
-    { id: 1, name: "Organic Nendran Bananas", price: 52, unit: "kg", sellerName: "Rajan Pillai (Aluva)", type: "produce" },
-    { id: 2, name: "Fresh Country Hen Eggs", price: 8, unit: "piece", sellerName: "Mariamma Joseph (Thrissur)", type: "produce" },
-    { id: 3, name: "Pure Morning Cow Milk", price: 54, unit: "litre", sellerName: "Manoj Kumar (Kottayam)", type: "produce" },
-    { id: 4, name: "Fresh Green Chillies", price: 45, unit: "kg", sellerName: "Biju Varghese (Idukki)", type: "produce" },
-    { id: 5, name: "Soft Cooking Tapioca / Cassava", price: 25, unit: "kg", sellerName: "Eldho Paul (Ernakulam)", type: "produce" },
-    { id: 6, name: "Organic Malabar Black Pepper", price: 550, unit: "kg", sellerName: "Sunny Thomas (Idukki)", type: "produce" }
+    { id: 1, name: "Organic Nendran Bananas (നേന്ത്രപ്പഴം)", price: 52, unit: "kg", sellerName: "Rajan Pillai (Aluva)", type: "produce", image: "../../static/img/produce-banana.svg" },
+    { id: 2, name: "Fresh Country Hen Eggs (നാടൻ മുട്ട)", price: 8, unit: "piece", sellerName: "Mariamma Joseph (Thrissur)", type: "produce", image: "../../static/img/produce-egg.svg" },
+    { id: 3, name: "Pure Morning Cow Milk (പശുവിൻ പാൽ)", price: 54, unit: "litre", sellerName: "Manoj Kumar (Kottayam)", type: "produce", image: "../../static/img/produce-milk.svg" },
+    { id: 4, name: "Spicy Green Chillies (പച്ചമുളക്)", price: 45, unit: "kg", sellerName: "Biju Varghese (Idukki)", type: "produce", image: "../../static/img/produce-chilli.svg" },
+    { id: 5, name: "Fresh Tapioca / Cassava (കപ്പ)", price: 25, unit: "kg", sellerName: "Eldho Paul (Ernakulam)", type: "produce", image: "../../static/img/produce-tapioca.svg" },
+    { id: 6, name: "Organic Malabar Black Pepper (കുരുമുളക്)", price: 550, unit: "kg", sellerName: "Sunny Thomas (Idukki)", type: "produce", image: "../../static/img/produce-pepper.svg" },
+    { id: 7, name: "Fresh Tender & Husked Coconut (തേങ്ങ)", price: 38, unit: "piece", sellerName: "Sasi Nair (Chalakudy)", type: "produce", image: "../../static/img/produce-coconut.svg" },
+    { id: 8, name: "Farm Fresh Wild Ginger (ഇഞ്ചി)", price: 120, unit: "kg", sellerName: "Varkey Chacko (Wayanad)", type: "produce", image: "../../static/img/produce-ginger.svg" },
+    { id: 9, name: "Highland Green Cardamom (ഏലക്ക)", price: 1800, unit: "kg", sellerName: "Kurian Joseph (Kumily)", type: "produce", image: "../../static/img/produce-cardamom.svg" },
+    { id: 10, name: "Elephant Foot Yam (നാടൻ ചേന)", price: 42, unit: "kg", sellerName: "Gopalakrishnan (Muvattupuzha)", type: "produce", image: "../../static/img/produce-yam.svg" },
+    { id: 11, name: "Farm Bitter Gourd (പാവയ്ക്ക)", price: 48, unit: "kg", sellerName: "Shaji K. (Alappuzha)", type: "produce", image: "../../static/img/produce-gourd.svg" },
+    { id: 12, name: "Country Red Tomatoes (തക്കാളി)", price: 38, unit: "kg", sellerName: "Murugan P. (Palakkad)", type: "produce", image: "../../static/img/produce-tomato.svg" }
   ]
 };
 
@@ -283,7 +323,19 @@ function updateQuickAddPreview() {
   const qty = Math.max(1, parseInt(qtyInput.value) || 1);
 
   const calcTotal = item.price * qty;
-  previewEl.textContent = `Live Calculation: ₹${item.price.toFixed(2)} × ${qty} ${item.unit} = ₹${calcTotal.toFixed(2)}`;
+  const imgUrl = item.image || getProduceThumb(item.name, item.type);
+
+  previewEl.innerHTML = `
+    <div class="quick-add-preview-box">
+      <img src="${imgUrl}" alt="${item.name}" class="quick-add-preview-thumb" onerror="this.src='../../static/img/placeholder.svg'">
+      <div class="quick-add-preview-details">
+        <div class="quick-add-preview-name">${item.name}</div>
+        <div class="quick-add-preview-calc">
+          ₹${item.price.toFixed(2)} × ${qty} ${item.unit} = <strong>₹${calcTotal.toFixed(2)}</strong>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function executeQuickAdd() {
@@ -305,6 +357,7 @@ function executeQuickAdd() {
       unit: item.unit,
       type: item.type,
       sellerName: item.sellerName,
+      image: item.image || getProduceThumb(item.name, item.type),
       quantity: qty
     });
     // Reset quick quantity

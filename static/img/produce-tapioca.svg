@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#FAF5EF" rx="16"/>
+  <!-- Tapioca root 1 -->
+  <path d="M40 70 C 60 60, 140 85, 165 125 C 150 145, 95 120, 40 70 Z" fill="#6E2C00" stroke="#4A235A" stroke-width="2"/>
+  <path d="M42 75 C 62 65, 138 88, 160 125 C 148 142, 95 118, 42 75 Z" fill="#873600"/>
+  <!-- Cut slice showing white flesh inside -->
+  <ellipse cx="60" cy="80" rx="18" ry="24" transform="rotate(-35 60 80)" fill="#FDFEFE" stroke="#873600" stroke-width="3"/>
+  <circle cx="60" cy="80" r="3" fill="#D5D8DC"/>
+  <!-- Tapioca root 2 -->
+  <path d="M70 145 C 95 110, 150 115, 170 140 C 150 160, 100 160, 70 145 Z" fill="#784212" stroke="#4E342E" stroke-width="2"/>
+  <ellipse cx="165" cy="140" rx="12" ry="16" transform="rotate(25 165 140)" fill="#FDFEFE" stroke="#784212" stroke-width="2.5"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#4E342E">TAPIOCA (KAPPA)</text>
+</svg>
+

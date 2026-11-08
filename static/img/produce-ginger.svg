@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#FEF9E7" rx="16"/>
+  <!-- Ginger Rhizome -->
+  <path d="M50 120 C 45 95, 60 85, 75 95 C 80 75, 100 70, 115 85 C 130 65, 155 75, 150 100 C 165 110, 160 135, 145 140 C 130 155, 95 150, 75 145 C 55 150, 40 135, 50 120 Z" fill="#D4AC0D" stroke="#B7950B" stroke-width="2.5"/>
+  <!-- Rhizome Segments / Knobs -->
+  <path d="M75 105 Q 90 120 75 135" stroke="#9A7D0A" stroke-width="2" fill="none"/>
+  <path d="M110 95 Q 120 120 105 140" stroke="#9A7D0A" stroke-width="2" fill="none"/>
+  <path d="M135 105 Q 140 125 130 135" stroke="#9A7D0A" stroke-width="2" fill="none"/>
+  <!-- Fresh Root Buds -->
+  <circle cx="72" cy="85" r="5" fill="#F9E79F"/>
+  <circle cx="112" cy="78" r="5.5" fill="#F9E79F"/>
+  <circle cx="152" cy="92" r="5" fill="#F9E79F"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#7D6608">ORGANIC GINGER</text>
+</svg>
+

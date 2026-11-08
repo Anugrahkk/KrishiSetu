@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#E8F8F5" rx="16"/>
+  <!-- Whole Coconut Husk -->
+  <ellipse cx="80" cy="110" rx="42" ry="48" fill="#795548" stroke="#4E342E" stroke-width="2.5"/>
+  <path d="M50 85 Q 80 110 110 85" stroke="#5D4037" stroke-width="2" fill="none"/>
+  <path d="M55 125 Q 80 145 105 125" stroke="#5D4037" stroke-width="2" fill="none"/>
+  <!-- Coconut Eyes -->
+  <circle cx="70" cy="80" r="4" fill="#3E2723"/>
+  <circle cx="85" cy="78" r="4" fill="#3E2723"/>
+  <circle cx="78" cy="90" r="4" fill="#3E2723"/>
+  <!-- Half Coconut with White Kernel & Water -->
+  <ellipse cx="135" cy="115" rx="35" ry="38" fill="#5D4037" stroke="#3E2723" stroke-width="2.5"/>
+  <ellipse cx="133" cy="115" rx="28" ry="32" fill="#FFFFFF" stroke="#D7CCC8" stroke-width="2"/>
+  <ellipse cx="131" cy="115" rx="20" ry="24" fill="#E0F7FA"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#3E2723">KERALA COCONUT</text>
+</svg>
+

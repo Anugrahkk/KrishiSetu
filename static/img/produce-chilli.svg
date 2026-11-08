@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#E8F8F5" rx="16"/>
+  <!-- Chilli 1 (Long Green) -->
+  <path d="M80 40 Q 65 75 70 115 Q 75 145 110 160 Q 85 140 85 110 Q 82 70 95 40 Z" fill="#2ECC71" stroke="#27AE60" stroke-width="2.5"/>
+  <!-- Calyx / Stem 1 -->
+  <path d="M78 40 L97 40 L92 25 L83 25 Z" fill="#1E8449"/>
+  <path d="M88 25 Q 92 15 102 12" stroke="#1E8449" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Chilli 2 (Vibrant Green) -->
+  <path d="M110 50 Q 135 85 130 120 Q 125 148 95 162 Q 115 142 118 115 Q 120 80 100 50 Z" fill="#27AE60" stroke="#1E8449" stroke-width="2.5"/>
+  <!-- Stem 2 -->
+  <path d="M98 50 L112 50 L108 35 L102 35 Z" fill="#145A32"/>
+  <path d="M105 35 Q 100 25 90 22" stroke="#145A32" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Highlights -->
+  <path d="M76 80 Q 75 110 90 135" stroke="#A9DFBF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#196F3D">GREEN CHILLIES</text>
+</svg>
+

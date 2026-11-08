@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#F4F6F6" rx="16"/>
+  <!-- Pepper Vine / Spike -->
+  <path d="M100 25 Q 95 70 102 120 Q 105 145 98 165" stroke="#27AE60" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Leaf -->
+  <path d="M100 45 C 135 35, 145 70, 125 90 C 110 75, 100 65, 100 45 Z" fill="#2ECC71" stroke="#27AE60" stroke-width="2"/>
+  <!-- Black Pepper Berries Cluster -->
+  <g fill="#212121" stroke="#424242" stroke-width="1.5">
+    <circle cx="92" cy="70" r="9"/>
+    <circle cx="110" cy="74" r="8.5"/>
+    <circle cx="96" cy="88" r="9.5"/>
+    <circle cx="114" cy="92" r="9"/>
+    <circle cx="90" cy="104" r="8"/>
+    <circle cx="106" cy="108" r="9"/>
+    <circle cx="94" cy="122" r="8.5"/>
+    <circle cx="110" cy="126" r="8"/>
+    <circle cx="100" cy="138" r="7.5"/>
+    <circle cx="96" cy="150" r="6.5"/>
+    <circle cx="104" cy="156" r="5.5"/>
+  </g>
+  <!-- Specular dots -->
+  <circle cx="90" cy="68" r="2.5" fill="#BDBDBD"/>
+  <circle cx="94" cy="86" r="2.5" fill="#BDBDBD"/>
+  <circle cx="104" cy="106" r="2.5" fill="#BDBDBD"/>
+  <text x="100" y="185" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#212121">BLACK PEPPER</text>
+</svg>
+

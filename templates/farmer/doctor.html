@@ -214,23 +214,23 @@
         </div>
       </div>
 
-      <!-- Retry State (Friendly Tips, Never Crash) -->
+      <!-- Retry / Non-Leaf Rejection State (Friendly Tips, Never Crash) -->
       <div id="retry-card" class="retry-card" style="display: none;">
-        <div class="retry-icon">📷</div>
-        <h3 class="retry-title">We need a clearer leaf view</h3>
+        <div id="retry-icon" class="retry-icon">⚠️</div>
+        <h3 id="retry-title" class="retry-title">Not a Plant Leaf Detected</h3>
         <p id="retry-message" class="retry-msg">
-          The photo is either too dark, blurry, or lacks clear leaf contrast.
+          The uploaded photo does not appear to contain a crop or plant leaf. KrishiSetu's Computer Vision engine only diagnoses plant leaves.
         </p>
         <div style="background: rgba(255, 255, 255, 0.7); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 0.88rem; text-align: left;">
-          <strong>Quick tips for best result:</strong>
-          <ul style="padding-left: 20px; margin-top: 6px;">
+          <strong id="retry-tips-heading">Quick tips for best result:</strong>
+          <ul id="retry-tips-list" style="padding-left: 20px; margin-top: 6px;">
             <li>Step outside into daylight (avoid camera flash reflections).</li>
-            <li>Place a single leaf flat on a white piece of paper.</li>
-            <li>Hold the camera steady 15–20 cm away and focus.</li>
+            <li>Place a single crop leaf flat (e.g. banana, pepper, paddy, coconut, vegetables).</li>
+            <li>Hold the camera steady 15–20 cm away and focus clearly on the leaf surface.</li>
           </ul>
         </div>
         <button type="button" class="btn btn-outline" onclick="document.getElementById('leaf-file-input').click()">
-          <span>🔄 Retake Leaf Photo</span>
+          <span>📷 Select / Capture a Plant Leaf Photo</span>
         </button>
       </div>
 
